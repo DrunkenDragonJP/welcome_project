@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mini Rover Workshop</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 32px;
+      font-family: "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at top left, #f8d9a0 0%, transparent 28%),
+        linear-gradient(135deg, #f4efe6 0%, #dfe8df 100%);
+      color: #243028;
+      min-height: 100vh;
+    }
+
+    .page-shell {
+      max-width: 1040px;
+      margin: 0 auto;
+    }
+
+    .hero {
+      margin-bottom: 28px;
+      padding: 36px;
+      border-radius: 24px;
+      background: #1f3d30;
+      color: #f7f4ee;
+      box-shadow: 0 22px 45px rgba(31, 61, 48, 0.18);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(135deg, rgba(17, 29, 24, 0.82), rgba(33, 62, 50, 0.58)),
+        url("minirover.jpg") center center / cover no-repeat;
+      transform: scale(1.03);
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto -40px -70px auto;
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      background: rgba(248, 217, 160, 0.18);
+    }
+
+    .hero > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-kicker {
+      display: inline-block;
+      margin-bottom: 14px;
+      padding: 6px 12px;
+      border: 1px solid rgba(255, 255, 255, 0.24);
+      border-radius: 999px;
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .hero h1 {
+      margin: 0;
+      font-size: clamp(34px, 5vw, 54px);
+      line-height: 1.08;
+      letter-spacing: 0.03em;
+    }
+
+    .hero p {
+      margin: 14px 0 0;
+      max-width: 700px;
+      font-size: 18px;
+      line-height: 1.7;
+      color: rgba(247, 244, 238, 0.88);
+    }
+
+    #materials {
+      margin: 0;
+      padding: 28px;
+      background: rgba(249, 249, 246, 0.86);
+      border: 1px solid rgba(36, 48, 40, 0.08);
+      border-radius: 24px;
+      box-shadow: 0 18px 40px rgba(36, 48, 40, 0.1);
+      backdrop-filter: blur(10px);
+    }
+
+    .content-card {
+      margin-top: 28px;
+      padding: 28px;
+      background: rgba(249, 249, 246, 0.86);
+      border: 1px solid rgba(36, 48, 40, 0.08);
+      border-radius: 24px;
+      box-shadow: 0 18px 40px rgba(36, 48, 40, 0.1);
+      backdrop-filter: blur(10px);
+    }
+
+    #materials h2,
+    .content-card h2 {
+      margin: 0 0 10px;
+      font-size: 28px;
+    }
+
+    .steps-list {
+      margin: 22px 0 0;
+      padding-left: 24px;
+    }
+
+    .steps-list li {
+      margin-bottom: 18px;
+      line-height: 1.7;
+    }
+
+    .step-title {
+      display: block;
+      margin-bottom: 4px;
+      font-weight: 700;
+      color: #1f3d30;
+    }
+
+    .coding-block {
+      margin-top: 22px;
+      padding: 18px;
+      border: 1px solid #d7ddd7;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.78);
+    }
+
+    .coding-block h3 {
+      margin: 0 0 8px;
+      font-size: 20px;
+      color: #1f3d30;
+    }
+
+    .coding-block p {
+      margin: 0 0 12px;
+      line-height: 1.7;
+    }
+
+    .coding-block pre {
+      margin: 0;
+      padding: 16px;
+      overflow-x: auto;
+      border-radius: 14px;
+      background: #1f2421;
+      color: #f4f6f2;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .coding-block code {
+      font-family: Consolas, "Courier New", monospace;
+    }
+
+    .setup-panel {
+      padding: 18px;
+      border: 1px solid #d7ddd7;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.82);
+    }
+
+    .setup-panel h3 {
+      margin: 0 0 8px;
+      font-size: 20px;
+      color: #1f3d30;
+    }
+
+    .setup-panel p {
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    .support-form {
+      margin-top: 22px;
+      display: grid;
+      gap: 16px;
+    }
+
+    .form-row {
+      display: grid;
+      gap: 8px;
+    }
+
+    .form-row label {
+      font-weight: 700;
+      color: #1f3d30;
+    }
+
+    .support-form input,
+    .support-form textarea {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1px solid #bcc8bf;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.92);
+      font-size: 15px;
+      box-sizing: border-box;
+    }
+
+    .support-form textarea {
+      min-height: 140px;
+      resize: vertical;
+      line-height: 1.6;
+    }
+
+    .form-note {
+      margin: 0;
+      font-size: 13px;
+      line-height: 1.5;
+      color: #5a665d;
+    }
+
+    .support-submit {
+      justify-self: start;
+      padding: 12px 18px;
+      border: none;
+      border-radius: 999px;
+      background: #1c6a52;
+      color: #f6f7f3;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .support-submit:disabled {
+      background: #9db1a7;
+      cursor: not-allowed;
+    }
+
+    .support-status {
+      margin: 0;
+      font-size: 14px;
+      color: #1c6a52;
+    }
+
+    #materials table {
+      width: 100%;
+      margin-top: 22px;
+      border-collapse: collapse;
+      background: rgba(255, 255, 255, 0.9);
+      overflow: hidden;
+      border-radius: 16px;
+    }
+
+    #materials th,
+    #materials td {
+      border: 1px solid #d7ddd7;
+      padding: 14px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    #materials th {
+      background-color: #e8eee7;
+    }
+
+    #materials a {
+      color: #1c6a52;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    #materials a:hover {
+      text-decoration: underline;
+    }
+
+    #materials select {
+      width: 100%;
+      padding: 10px 12px;
+      font-size: 15px;
+      border: 1px solid #bbb;
+      border-radius: 8px;
+      background-color: #fff;
+    }
+
+    .microcontroller-note {
+      margin: 8px 0 0;
+      font-size: 14px;
+      line-height: 1.5;
+      color: #555;
+    }
+
+    .part-role {
+      margin: 6px 0 0;
+      font-size: 13px;
+      line-height: 1.5;
+      color: #5a665d;
+    }
+
+    .optional-badge {
+      display: inline-block;
+      margin-left: 8px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: #e6f1eb;
+      color: #1c6a52;
+      font-size: 12px;
+      font-weight: 700;
+      vertical-align: middle;
+    }
+
+    .tire-preview-wrap {
+      display: grid;
+      gap: 10px;
+    }
+
+    .tire-note {
+      margin: 8px 0 0;
+      font-size: 14px;
+      line-height: 1.5;
+      color: #555;
+    }
+
+    .tire-preview {
+      width: 100%;
+      max-width: 220px;
+      border: 1px solid #d7ddd7;
+      border-radius: 14px;
+      background: linear-gradient(180deg, #f8faf8 0%, #edf2ed 100%);
+      padding: 8px;
+      box-sizing: border-box;
+    }
+
+    .tire-caption {
+      margin: 0;
+      font-size: 13px;
+      color: #516056;
+    }
+
+    @media (max-width: 720px) {
+      body {
+        padding: 18px;
+      }
+
+      .hero,
+      #materials,
+      .content-card {
+        padding: 22px;
+      }
+
+      .hero p {
+        font-size: 16px;
+      }
+
+      #materials table,
+      #materials thead,
+      #materials tbody,
+      #materials tr,
+      #materials th,
+      #materials td {
+        display: block;
+      }
+
+      #materials thead {
+        display: none;
+      }
+
+      #materials tr {
+        margin-bottom: 14px;
+        border: 1px solid #d7ddd7;
+        border-radius: 14px;
+        overflow: hidden;
+      }
+
+      #materials td {
+        border: none;
+        border-bottom: 1px solid #d7ddd7;
+      }
+
+      #materials td:last-child {
+        border-bottom: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-shell">
+    <header class="hero">
+      <span class="hero-kicker">R-sec New Welcome Project</span>
+      <h1>Electronics Workshop Edition</h1>
+      <p>make own tyny ROVER</p>
+      <p>A hands-on workshop where you build a small rover while learning the basics of electronics and control systems.</p>
+    </header>
+
+    <section id="materials">
+      <h2>Materials</h2>
+      <p>This is the list of parts used in the project. You can also check prices and purchase links.</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Part</th>
+            <th>Price</th>
+            <th>Purchase Link</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <label for="microcontroller">Microcontroller</label><br>
+              <select id="microcontroller" name="microcontroller">
+                <option value="xiao-esp32c3" data-price="JPY 1,080" data-url="https://akizukidenshi.com/catalog/g/g117454/">Seeed Studio XIAO ESP32C3</option>
+                <option value="xiao-esp32s3" data-price="JPY 1,480" data-url="https://akizukidenshi.com/catalog/g/g118078/">Seeed Studio XIAO ESP32S3</option>
+                <option value="xiao-esp32s3-sense" data-price="JPY 2,660" data-url="https://akizukidenshi.com/catalog/g/g118079/">Seeed Studio XIAO ESP32S3 Sense</option>
+              </select>
+              <p class="part-role">This is the main control unit, acting as the brain of the rover.</p>
+              <p class="microcontroller-note">If you choose XIAO ESP32S3 Sense, you can build a setup for real-time driving while watching camera footage over Wi-Fi.</p>
+            </td>
+            <td id="microcontroller-price">JPY 1,080</td>
+            <td><a id="microcontroller-link" href="https://akizukidenshi.com/catalog/g/g117454/" target="_blank">View Product</a></td>
+          </tr>
+          <tr>
+            <td>
+              Battery
+              <p class="part-role">Provides power to all the parts in the rover.</p>
+            </td>
+            <td>Check on Amazon</td>
+            <td><a href="https://www.amazon.co.jp/mah%E3%80%81SM%E3%83%97%E3%83%A9%E3%82%B0%E3%83%AA%E3%83%81%E3%82%A6%E3%83%A0%E9%9B%BB%E6%B1%A0%E4%BB%98%E3%81%8D%E3%80%811%E3%81%BE%E3%81%9F%E3%81%AF3%E5%85%85%E9%9B%BB%E3%82%B1%E3%83%BC%E3%83%96%E3%83%AB%E4%BB%98%E3%81%8D%E3%80%81WPL-RC%E3%83%88%E3%83%A9%E3%83%83%E3%82%AF%E9%83%A8%E5%93%81Anstoy-1085-1086-1087%E3%82%B2%E3%83%AB%E3%83%9C%E3%83%BC%E3%83%AB%E3%83%96%E3%83%A9%E3%82%B9%E3%83%88%E6%A9%9F%E3%83%AA%E3%83%81%E3%82%A6%E3%83%A0%E9%9B%BB%E6%B1%A0%E3%81%AB%E9%81%A9%E7%94%A8/dp/B0BMWY3JNQ/ref=pd_sbs_d_sccl_1_6/357-3891162-9885607?pd_rd_w=BPUjm&content-id=amzn1.sym.d9975236-2c6f-40f8-8a79-8a86a96a4ad2&pf_rd_p=d9975236-2c6f-40f8-8a79-8a86a96a4ad2&pf_rd_r=AE9H8X5SZTYPAJTP7W2C&pd_rd_wg=DxDlx&pd_rd_r=9b9209b5-fa27-4bd0-9273-3115cc8a4798&pd_rd_i=B0BMWY3JNQ&psc=1" target="_blank">View Product</a></td>
+          </tr>
+          <tr>
+            <td>
+              XT30 Connector Male PCB Mount XT30PW-M
+              <p class="part-role">A power connector that makes it easier to connect and disconnect the battery from the board.</p>
+            </td>
+            <td>JPY 70</td>
+            <td><a href="https://akizukidenshi.com/catalog/g/g117949/" target="_blank">View Product</a></td>
+          </tr>
+          <tr>
+            <td>
+              Buck Converter
+              <p class="part-role">Steps down the battery voltage and supplies stable power where needed.</p>
+            </td>
+            <td>Check on Amazon</td>
+            <td><a href="https://www.amazon.co.jp/DROK-%E9%99%8D%E5%9C%A7%E3%82%B3%E3%83%B3%E3%83%90%E3%83%BC%E3%82%BF%E3%83%BC-%E3%83%9F%E3%83%8B%E9%9B%BB%E5%9C%A7%E3%83%AC%E3%82%AE%E3%83%A5%E3%83%AC%E3%83%BC%E3%82%BF%E3%83%BC%E3%83%9C%E3%83%BC%E3%83%89-%E5%9B%BA%E5%AE%9A%E3%81%A8%E8%AA%BF%E6%95%B4%E5%8F%AF%E8%83%BD%E5%87%BA%E5%8A%9B%E9%9B%BB%E5%9C%A7%E5%A4%89%E5%9C%A7%E5%99%A8-%E9%9B%BB%E6%BA%90%E3%82%B9%E3%82%BF%E3%83%93%E3%83%A9%E3%82%A4%E3%82%B6%E3%83%BC%E3%83%A2%E3%82%B8%E3%83%A5%E3%83%BC%E3%83%AB/dp/B0BB6RL227/ref=sr_1_8?__mk_ja_JP=%E3%82%AB%E3%82%BF%E3%82%AB%E3%83%8A&crid=12CP7LO6PXJKW&dib=eyJ2IjoiMSJ9._U8VhFnf6QBqcjN6N7YOvX4mHOso6OpF_MRO1bHyVEe4HAcup6uYme5HncT78vcsB27AVUgmp0N5F7SY-Laq9FNhwecwLxw1ee6PpY9IgFfAUkMdh58WElhlAgQfVO_HKqWS0hftgrBjHqrPUt1BbQrMZsK1WlxKxCIKuz4e91bqIPikZjWtl-e-hSsjSsAckOwbnmikeGjn2tkhpk9a7UbDszKIZHyLEtJHqDF6dt0U5oSZ0cG-1vrYSccdOXoBsxnLB1i_dH0YUlGUAjP5pZ9pIpmriW45gS4hXxxgp_g.EfdV6uO74gF5L-LqzYN_V059UjIrQDve90Qn5zb22rI&dib_tag=se&keywords=5V%2B%E3%82%B3%E3%83%B3%E3%83%90%E3%83%BC%E3%82%BF%E3%83%BC&qid=1774194060&s=electronics&sprefix=5v%2B%E3%82%B3%E3%83%B3%E3%83%90%E3%83%BC%E3%82%BF%E3%83%BC%2Celectronics%2C192&sr=1-8&ufe=app_do%3Aamzn1.fos.d8e7ee72-073f-4b97-8ec0-59c18d6dfebe&th=1" target="_blank">View Product</a></td>
+          </tr>
+          <tr>
+            <td>
+              FEETECH Geared Motor FM90
+              <p class="part-role">Drive motor for the rover. It turns the left and right wheels. Two units are required.</p>
+            </td>
+            <td>JPY 330 x 2</td>
+            <td><a href="https://akizukidenshi.com/catalog/g/g114801/" target="_blank">View Product</a></td>
+          </tr>
+          <tr>
+            <td>
+              XH Connector PCB Side Entry 2P S2B-XH-A(LF)(SN)
+              <p class="part-role">A board-mounted connector used to connect the motors. Two pieces are required for the left and right motors.</p>
+            </td>
+            <td>JPY 15 x 2</td>
+            <td><a href="https://akizukidenshi.com/catalog/g/g112262/" target="_blank">View Product</a></td>
+          </tr>
+          <tr>
+            <td>
+              Multilayer Ceramic Capacitor 1uF 50V X7R 5 mm <span class="optional-badge">Optional</span>
+              <p class="part-role">An optional part that can be added to the motor output. It helps suppress motor noise and reduce unwanted effects on control signals and the power line.</p>
+            </td>
+            <td>JPY 20</td>
+            <td><a href="https://akizukidenshi.com/catalog/g/g108150/" target="_blank">View Product</a></td>
+          </tr>
+          <tr>
+            <td>
+              TB6612 Motor Driver
+              <p class="part-role">Receives signals from the microcontroller and controls motor direction and speed.</p>
+            </td>
+            <td>JPY 380</td>
+            <td><a href="https://akizukidenshi.com/catalog/g/g116947/" target="_blank">View Product</a></td>
+          </tr>
+          <tr>
+            <td>
+              IMU Attitude Sensor <span class="optional-badge">Optional</span>
+              <p class="part-role">An optional sensor for detecting tilt and motion of the rover body.</p>
+            </td>
+            <td>Check on Amazon</td>
+            <td><a href="https://www.amazon.co.jp/ps61003-MPU-6050-%E4%BD%BF%E7%94%A8-%EF%BC%93%E8%BB%B8%E3%82%B8%E3%83%A3%E3%82%A4%E3%83%AD%E3%82%B9%E3%82%B3%E3%83%BC%E3%83%97%E3%83%BB%EF%BC%93%E8%BB%B8%E5%8A%A0%E9%80%9F%E5%BA%A6%E3%82%BB%E3%83%B3%E3%82%B5%E3%83%BC-%E3%83%A2%E3%82%B8%E3%83%A5%E3%83%BC%E3%83%AB/dp/B008BOPN40/ref=sr_1_6?dib=eyJ2IjoiMSJ9.42X7FTstpNcHweli9UHZt7PC1KgI2QqnX8DKxVGlw04_PFPZiNdZ19wXnwQjq5JfqoZ7Tkn2IUgl5R2WeG1Ig-OfFKtfS1sGsV21iE_-pZrEoogb25EeO9s3cq6TXiQzX6shrAKMdY9UfyiMzzUk3xCY1F_YQ7RZm2safo6d6KHD8jFq1f7S_743JbTFAtYtumcUVUCUNMobSvwjmqDXRdlpNBPZVPjMHBl7j4b7-ogzzdVjzZlpUYiYXTl6iHjp_aPkPmp-N_-Yj68N8sN-bTp6VzPn_vAL46HgotdoF08.jnXN91fDz8Im5RFf-tqaqUs8SK47sNe9CrBrO1na3AE&dib_tag=se&keywords=MPU9250&qid=1774196724&sr=8-6&ufe=app_do%3Aamzn1.fos.d8e7ee72-073f-4b97-8ec0-59c18d6dfebe" target="_blank">View Product</a></td>
+          </tr>
+          <tr>
+            <td>
+              <label for="tire-select">Tires</label><br>
+              <select id="tire-select" name="tire-select">
+                <option value="street" data-price="To be selected">Street Type</option>
+                <option value="block" data-price="To be selected">Block Tire</option>
+                <option value="slick" data-price="To be selected">Slick Tire</option>
+              </select>
+              <p class="part-role">The running gear that grips the ground and affects driving performance.</p>
+              <p class="tire-note">You can choose from three tire styles, and the preview image changes with your selection.</p>
+            </td>
+            <td id="tire-price">To be selected</td>
+            <td>
+              <div class="tire-preview-wrap">
+                <img id="tire-preview" class="tire-preview" alt="Street type tire preview">
+                <p id="tire-caption" class="tire-caption">Street Type</p>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              OLED Display
+              <p class="part-role">A small display for status messages and simple information output.</p>
+            </td>
+            <td>Check on Amazon</td>
+            <td><a href="https://www.amazon.co.jp/YUWENW-OLED%E3%83%87%E3%82%A3%E3%82%B9%E3%83%97%E3%83%AC%E3%82%A4-0-96%E3%82%A4%E3%83%B3%E3%83%81-OLED%E3%83%A2%E3%82%B8%E3%83%A5%E3%83%BC%E3%83%AB-Arduino%E3%81%AB%E5%AF%BE%E5%BF%9C/dp/B0DJ7B8P48/ref=sr_1_1_sspa?dib=eyJ2IjoiMSJ9.taiBTPMkoK_7pzI4tSJyJ8wP3B-z_flQb8XOSY4jcDx0W_85qolIxUkjR6ZaLgCWoY1ZtcwBGP5UZ7Wdaq-3q5vS3CwUUdxnrW7B9j881VIJqU1L1tUR4QSxICYDFjKxBIX8of5f__pHCMMGV48VyN9Z2V9UdHicn9i1_iCy6MEeBd2ZXyBxEyZ2yTHevjnNLTmugUQvxdAIlHkrwGwIQte3w6rxtJ7HQzzRlgYu56RuluP07VHs-2LS6HvJKGFXrKsURUOtiqFXTzTiB-wCEGQI2f89uHMIBqiGcx_o9TE.jibN0opIddprUIzjujLC0W5rNTNKnsfkjYgTXEVtScI&dib_tag=se&keywords=OLED&qid=1774194203&sr=8-1-spons&ufe=app_do%3Aamzn1.fos.d8e7ee72-073f-4b97-8ec0-59c18d6dfebe&sp_csd=d2lkZ2V0TmFtZT1zcF9hdGY&th=1" target="_blank">View Product</a></td>
+          </tr>
+          <tr>
+            <td>
+              Connector Housing 4P
+              <p class="part-role">A 4-pin housing used to connect the OLED display.</p>
+            </td>
+            <td>JPY 10</td>
+            <td><a href="https://akizukidenshi.com/catalog/g/g112153/" target="_blank">View Product</a></td>
+          </tr>
+          <tr>
+            <td>
+              PCB Slide Switch SS-12D00-G5
+              <p class="part-role">A compact board-mounted switch used as the main power on/off control.</p>
+            </td>
+            <td>JPY 20</td>
+            <td><a href="https://akizukidenshi.com/catalog/g/g108790/" target="_blank">View Product</a></td>
+          </tr>
+          <tr>
+            <td>
+              General Purpose Rectifier Diode 1000V 1A 1N4007
+              <p class="part-role">A diode used for rectification on the power board. It can also help with reverse-polarity and backflow protection.</p>
+            </td>
+            <td>JPY 100 / 20 pcs</td>
+            <td><a href="https://akizukidenshi.com/catalog/g/g100934/" target="_blank">View Product</a></td>
+          </tr>
+          <tr>
+            <td>
+              3 mm Yellow-Green LED 570 nm 100 mcd 70deg OSG8HA3Z74A
+              <p class="part-role">An indicator LED used to confirm whether the power is on or off.</p>
+            </td>
+            <td>JPY 10</td>
+            <td><a href="https://akizukidenshi.com/catalog/g/g111637/" target="_blank">View Product</a></td>
+          </tr>
+          <tr>
+            <td>
+              Resistor about 200 ohms
+              <p class="part-role">A resistor used for voltage drop and current limiting for the power indicator LED.</p>
+            </td>
+            <td>Prepare separately</td>
+            <td>No link</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="content-card" id="assembly">
+      <h2>Assembly Guide</h2>
+      <p>You can edit this section freely later. Replace the placeholder text for each step with your own instructions.</p>
+      <ol class="steps-list">
+        <li>
+          <span class="step-title">Step 1</span>
+          Write the explanation for step 1 here.
+        </li>
+        <li>
+          <span class="step-title">Step 2</span>
+          Write the explanation for step 2 here.
+        </li>
+        <li>
+          <span class="step-title">Step 3</span>
+          Write the explanation for step 3 here.
+        </li>
+      </ol>
+    </section>
+
+    <section class="content-card" id="coding">
+      <h2>Development Environment Setup</h2>
+      <p>You can choose one of three development environments, and only the explanation panel for the selected option will be shown.</p>
+
+      <div class="design-selector">
+        <div class="form-row">
+          <label for="environment-select">Development Environment</label>
+          <select id="environment-select" name="environment-select">
+            <option value="platformio">PlatformIO (Recommended)</option>
+            <option value="arduino">Arduino IDE</option>
+            <option value="micropython">MicroPython</option>
+          </select>
+        </div>
+
+        <div class="setup-panel">
+          <h3 id="environment-title">PlatformIO (Recommended)</h3>
+          <p id="environment-description">Setup description not written yet.</p>
+        </div>
+      </div>
+
+      <h2>Coding</h2>
+      <p>This section is designed so you can alternate between explanations and code examples. You can freely edit the content later.</p>
+
+      <div class="coding-block">
+        <h3>Code 1 Description</h3>
+        <p>Write the explanation for the first code block here.</p>
+        <pre><code>// Write the first code block here
+void setup() {
+}
+
+void loop() {
+}</code></pre>
+      </div>
+
+      <div class="coding-block">
+        <h3>Code 2 Description</h3>
+        <p>Write the explanation for the second code block here.</p>
+        <pre><code>// Write the second code block here
+void setup() {
+}
+
+void loop() {
+}</code></pre>
+      </div>
+
+      <div class="coding-block">
+        <h3>Code 3 Description</h3>
+        <p>Write the explanation for the third code block here.</p>
+        <pre><code>// Write the third code block here
+void setup() {
+}
+
+void loop() {
+}</code></pre>
+      </div>
+    </section>
+
+    <section class="content-card" id="support">
+      <h2>Support Form</h2>
+      <p>This form is for questions and support requests. A course registration number is required before you can submit a question.</p>
+
+      <form class="support-form" id="support-form">
+        <div class="form-row">
+          <label for="registration-number">Course Registration Number</label>
+          <input id="registration-number" name="registration-number" type="text" placeholder="Example: RSEC-2026-001" required>
+          <p class="form-note">Entering your course registration number is required. You cannot submit a question without it.</p>
+        </div>
+
+        <div class="form-row">
+          <label for="support-question">Your Question</label>
+          <textarea id="support-question" name="support-question" placeholder="Write your question here." required></textarea>
+        </div>
+
+        <button class="support-submit" id="support-submit" type="submit" disabled>Submit Question</button>
+        <p class="support-status" id="support-status">Enter your registration number to enable submission.</p>
+      </form>
+    </section>
+  </div>
+
+  <script>
+    const microcontrollerSelect = document.getElementById("microcontroller");
+    const microcontrollerPrice = document.getElementById("microcontroller-price");
+    const microcontrollerLink = document.getElementById("microcontroller-link");
+    const tireSelect = document.getElementById("tire-select");
+    const tirePrice = document.getElementById("tire-price");
+    const tirePreview = document.getElementById("tire-preview");
+    const tireCaption = document.getElementById("tire-caption");
+    const environmentSelect = document.getElementById("environment-select");
+    const environmentTitle = document.getElementById("environment-title");
+    const environmentDescription = document.getElementById("environment-description");
+    const registrationNumberInput = document.getElementById("registration-number");
+    const supportForm = document.getElementById("support-form");
+    const supportSubmit = document.getElementById("support-submit");
+    const supportStatus = document.getElementById("support-status");
+
+    const tireImages = {
+      street: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 160'><rect width='240' height='160' rx='20' fill='%23f4f7f4'/><ellipse cx='120' cy='80' rx='72' ry='72' fill='%2323282b'/><ellipse cx='120' cy='80' rx='46' ry='46' fill='%236c767a'/><ellipse cx='120' cy='80' rx='20' ry='20' fill='%23d8dfdc'/><g stroke='%239ba5aa' stroke-width='4'><line x1='120' y1='40' x2='120' y2='120'/><line x1='80' y1='80' x2='160' y2='80'/><line x1='92' y1='52' x2='148' y2='108'/><line x1='148' y1='52' x2='92' y2='108'/></g><g stroke='%23454e52' stroke-width='5'><line x1='66' y1='38' x2='174' y2='122'/><line x1='58' y1='52' x2='166' y2='136'/><line x1='74' y1='24' x2='182' y2='108'/></g></svg>",
+      block: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 160'><rect width='240' height='160' rx='20' fill='%23f4f7f4'/><ellipse cx='120' cy='80' rx='72' ry='72' fill='%2323282b'/><ellipse cx='120' cy='80' rx='44' ry='44' fill='%23626d72'/><ellipse cx='120' cy='80' rx='18' ry='18' fill='%23d8dfdc'/><g fill='%23464f53'><rect x='52' y='24' width='20' height='18' rx='4'/><rect x='86' y='12' width='20' height='18' rx='4'/><rect x='120' y='8' width='20' height='18' rx='4'/><rect x='154' y='12' width='20' height='18' rx='4'/><rect x='174' y='34' width='18' height='20' rx='4'/><rect x='182' y='68' width='18' height='20' rx='4'/><rect x='174' y='102' width='18' height='20' rx='4'/><rect x='154' y='124' width='20' height='18' rx='4'/><rect x='120' y='134' width='20' height='18' rx='4'/><rect x='86' y='124' width='20' height='18' rx='4'/><rect x='52' y='102' width='18' height='20' rx='4'/><rect x='40' y='68' width='18' height='20' rx='4'/><rect x='52' y='34' width='18' height='20' rx='4'/></g></svg>",
+      slick: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 160'><rect width='240' height='160' rx='20' fill='%23f4f7f4'/><ellipse cx='120' cy='80' rx='72' ry='72' fill='%231f2326'/><ellipse cx='120' cy='80' rx='48' ry='48' fill='%23687175'/><ellipse cx='120' cy='80' rx='22' ry='22' fill='%23dbe1de'/><g stroke='%239aa3a7' stroke-width='4'><line x1='120' y1='34' x2='120' y2='126'/><line x1='74' y1='80' x2='166' y2='80'/><line x1='89' y1='49' x2='151' y2='111'/><line x1='151' y1='49' x2='89' y2='111'/></g><circle cx='120' cy='80' r='65' fill='none' stroke='%23343b3f' stroke-width='4'/></svg>"
+    };
+
+    const environmentOptions = {
+      platformio: {
+        title: "PlatformIO (Recommended)",
+        description: "Setup description not written yet."
+      },
+      arduino: {
+        title: "Arduino IDE",
+        description: "Setup description not written yet."
+      },
+      micropython: {
+        title: "MicroPython",
+        description: "Setup description not written yet."
+      }
+    };
+
+    microcontrollerSelect.addEventListener("change", () => {
+      const selectedOption = microcontrollerSelect.options[microcontrollerSelect.selectedIndex];
+      microcontrollerPrice.textContent = selectedOption.dataset.price;
+      microcontrollerLink.href = selectedOption.dataset.url;
+    });
+
+    const updateTirePreview = () => {
+      const selectedOption = tireSelect.options[tireSelect.selectedIndex];
+      tirePrice.textContent = selectedOption.dataset.price;
+      tirePreview.src = tireImages[selectedOption.value];
+      tirePreview.alt = selectedOption.text + " tire preview";
+      tireCaption.textContent = selectedOption.text;
+    };
+
+    const updateEnvironmentPreview = () => {
+      const selectedEnvironment = environmentOptions[environmentSelect.value];
+      environmentTitle.textContent = selectedEnvironment.title;
+      environmentDescription.textContent = selectedEnvironment.description;
+    };
+
+    updateTirePreview();
+    tireSelect.addEventListener("change", updateTirePreview);
+    updateEnvironmentPreview();
+    environmentSelect.addEventListener("change", updateEnvironmentPreview);
+
+    const updateSupportState = () => {
+      const hasRegistrationNumber = registrationNumberInput.value.trim().length > 0;
+      supportSubmit.disabled = !hasRegistrationNumber;
+      supportStatus.textContent = hasRegistrationNumber
+        ? "Registration number confirmed. You can now submit your question."
+        : "Enter your registration number to enable submission.";
+    };
+
+    registrationNumberInput.addEventListener("input", updateSupportState);
+    updateSupportState();
+
+    supportForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      if (registrationNumberInput.value.trim().length === 0) {
+        supportStatus.textContent = "Please enter your registration number before submitting a question.";
+        registrationNumberInput.focus();
+        return;
+      }
+
+      supportStatus.textContent = "Form content checked. The actual submission destination can be set later.";
+    });
+  </script>
+</body>
+</html>

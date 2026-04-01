@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>材料一覧ページ</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 32px;
+      font-family: "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at top left, #f8d9a0 0%, transparent 28%),
+        linear-gradient(135deg, #f4efe6 0%, #dfe8df 100%);
+      color: #243028;
+      min-height: 100vh;
+    }
+
+    .page-shell {
+      max-width: 1040px;
+      margin: 0 auto;
+    }
+
+    .hero {
+      margin-bottom: 28px;
+      padding: 36px;
+      border-radius: 24px;
+      background: #1f3d30;
+      color: #f7f4ee;
+      box-shadow: 0 22px 45px rgba(31, 61, 48, 0.18);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(135deg, rgba(17, 29, 24, 0.82), rgba(33, 62, 50, 0.58)),
+        url("minirover.jpg") center center / cover no-repeat;
+      transform: scale(1.03);
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto -40px -70px auto;
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      background: rgba(248, 217, 160, 0.18);
+    }
+
+    .hero > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-kicker {
+      display: inline-block;
+      margin-bottom: 14px;
+      padding: 6px 12px;
+      border: 1px solid rgba(255, 255, 255, 0.24);
+      border-radius: 999px;
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .hero h1 {
+      margin: 0;
+      font-size: clamp(34px, 5vw, 54px);
+      line-height: 1.08;
+      letter-spacing: 0.03em;
+    }
+
+    .language-link {
+      display: inline-flex;
+      align-items: center;
+      margin-top: 18px;
+      padding: 10px 14px;
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      border-radius: 999px;
+      color: #f7f4ee;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 700;
+      background: rgba(255, 255, 255, 0.08);
+      transition: background-color 0.2s ease;
+    }
+
+    .language-link:hover {
+      background: rgba(255, 255, 255, 0.16);
+    }
+
+    .hero p {
+      margin: 14px 0 0;
+      max-width: 700px;
+      font-size: 18px;
+      line-height: 1.7;
+      color: rgba(247, 244, 238, 0.88);
+    }
+
+    #materials {
+      margin: 0;
+      padding: 28px;
+      background: rgba(249, 249, 246, 0.86);
+      border: 1px solid rgba(36, 48, 40, 0.08);
+      border-radius: 24px;
+      box-shadow: 0 18px 40px rgba(36, 48, 40, 0.1);
+      backdrop-filter: blur(10px);
+    }
+
+    .content-card {
+      margin-top: 28px;
+      padding: 28px;
+      background: rgba(249, 249, 246, 0.86);
+      border: 1px solid rgba(36, 48, 40, 0.08);
+      border-radius: 24px;
+      box-shadow: 0 18px 40px rgba(36, 48, 40, 0.1);
+      backdrop-filter: blur(10px);
+    }
+
+    #materials h2 {
+      margin: 0 0 10px;
+      font-size: 28px;
+    }
+
+    .content-card h2 {
+      margin: 0 0 10px;
+      font-size: 28px;
+    }
+
+    .design-selector {
+      margin-top: 22px;
+      display: grid;
+      gap: 16px;
+    }
+
+    .design-selector label {
+      font-weight: 700;
+      color: #1f3d30;
+    }
+
+    .design-selector select {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1px solid #bcc8bf;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.92);
+      font-size: 15px;
+      box-sizing: border-box;
+    }
+
+    .design-preview {
+      display: grid;
+      gap: 12px;
+      padding: 18px;
+      border: 1px solid #d7ddd7;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.82);
+    }
+
+    .design-preview h3 {
+      margin: 0;
+      font-size: 22px;
+      color: #1f3d30;
+    }
+
+    .design-preview p {
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    .design-meta {
+      display: grid;
+      gap: 8px;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    }
+
+    .design-meta-item {
+      padding: 12px 14px;
+      border-radius: 14px;
+      background: #edf3ee;
+    }
+
+    .design-meta-label {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #5a665d;
+    }
+
+    .steps-list {
+      margin: 22px 0 0;
+      padding-left: 24px;
+    }
+
+    .steps-list li {
+      margin-bottom: 18px;
+      line-height: 1.7;
+    }
+
+    .step-title {
+      display: block;
+      margin-bottom: 4px;
+      font-weight: 700;
+      color: #1f3d30;
+    }
+
+    .coding-block {
+      margin-top: 22px;
+      padding: 18px;
+      border: 1px solid #d7ddd7;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.78);
+    }
+
+    .coding-block h3 {
+      margin: 0 0 8px;
+      font-size: 20px;
+      color: #1f3d30;
+    }
+
+    .coding-block p {
+      margin: 0 0 12px;
+      line-height: 1.7;
+    }
+
+    .coding-block pre {
+      margin: 0;
+      padding: 16px;
+      overflow-x: auto;
+      border-radius: 14px;
+      background: #1f2421;
+      color: #f4f6f2;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .coding-block code {
+      font-family: Consolas, "Courier New", monospace;
+    }
+
+    .setup-panel {
+      padding: 18px;
+      border: 1px solid #d7ddd7;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.82);
+    }
+
+    .setup-panel h3 {
+      margin: 0 0 8px;
+      font-size: 20px;
+      color: #1f3d30;
+    }
+
+    .setup-panel p {
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    .support-form {
+      margin-top: 22px;
+      display: grid;
+      gap: 16px;
+    }
+
+    .form-row {
+      display: grid;
+      gap: 8px;
+    }
+
+    .form-row label {
+      font-weight: 700;
+      color: #1f3d30;
+    }
+
+    .support-form input,
+    .support-form textarea {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1px solid #bcc8bf;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.92);
+      font-size: 15px;
+      box-sizing: border-box;
+    }
+
+    .support-form textarea {
+      min-height: 140px;
+      resize: vertical;
+      line-height: 1.6;
+    }
+
+    .form-note {
+      margin: 0;
+      font-size: 13px;
+      line-height: 1.5;
+      color: #5a665d;
+    }
+
+    .support-submit {
+      justify-self: start;
+      padding: 12px 18px;
+      border: none;
+      border-radius: 999px;
+      background: #1c6a52;
+      color: #f6f7f3;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .support-submit:disabled {
+      background: #9db1a7;
+      cursor: not-allowed;
+    }
+
+    .support-status {
+      margin: 0;
+      font-size: 14px;
+      color: #1c6a52;
+    }
+
+    #materials table {
+      width: 100%;
+      margin-top: 22px;
+      border-collapse: collapse;
+      background: rgba(255, 255, 255, 0.9);
+      overflow: hidden;
+      border-radius: 16px;
+    }
+
+    #materials th,
+    #materials td {
+      border: 1px solid #d7ddd7;
+      padding: 14px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    #materials th {
+      background-color: #e8eee7;
+    }
+
+    #materials a {
+      color: #1c6a52;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    #materials a:hover {
+      text-decoration: underline;
+    }
+
+    #materials select {
+      width: 100%;
+      padding: 10px 12px;
+      font-size: 15px;
+      border: 1px solid #bbb;
+      border-radius: 8px;
+      background-color: #fff;
+    }
+
+    .microcontroller-note {
+      margin: 8px 0 0;
+      font-size: 14px;
+      line-height: 1.5;
+      color: #555;
+    }
+
+    .part-role {
+      margin: 6px 0 0;
+      font-size: 13px;
+      line-height: 1.5;
+      color: #5a665d;
+    }
+
+    .optional-badge {
+      display: inline-block;
+      margin-left: 8px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: #e6f1eb;
+      color: #1c6a52;
+      font-size: 12px;
+      font-weight: 700;
+      vertical-align: middle;
+    }
+
+    .tire-preview-wrap {
+      display: grid;
+      gap: 10px;
+    }
+
+    .tire-note {
+      margin: 8px 0 0;
+      font-size: 14px;
+      line-height: 1.5;
+      color: #555;
+    }
+
+    .tire-preview {
+      width: 100%;
+      max-width: 220px;
+      border: 1px solid #d7ddd7;
+      border-radius: 14px;
+      background: linear-gradient(180deg, #f8faf8 0%, #edf2ed 100%);
+      padding: 8px;
+      box-sizing: border-box;
+    }
+
+    .tire-caption {
+      margin: 0;
+      font-size: 13px;
+      color: #516056;
+    }
+
+    @media (max-width: 720px) {
+      body {
+        padding: 18px;
+      }
+
+      .hero,
+      #materials {
+        padding: 22px;
+      }
+
+      .hero p {
+        font-size: 16px;
+      }
+
+      #materials table,
+      #materials thead,
+      #materials tbody,
+      #materials tr,
+      #materials th,
+      #materials td {
+        display: block;
+      }
+
+      #materials thead {
+        display: none;
+      }
+
+      #materials tr {
+        margin-bottom: 14px;
+        border: 1px solid #d7ddd7;
+        border-radius: 14px;
+        overflow: hidden;
+      }
+
+      #materials td {
+        border: none;
+        border-bottom: 1px solid #d7ddd7;
+      }
+
+      #materials td:last-child {
+        border-bottom: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-shell">
+    <header class="hero">
+      <span class="hero-kicker">R-sec  new welcome Project</span>
+      <h1>電子工作編</h1>
+      <p>make own tyny ROVER</p>
+      <p>小型ローバーを自作しながら、電子工作と制御の基礎を楽しく体験するための講座です。</p>
+      <a class="language-link" href="index_en.html">View English Page</a>
+    </header>
+
+    <section id="materials">
+      <h2>材料</h2>
+      <p>制作に使用する材料の一覧です。価格や購入先も確認できます。</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>材料名</th>
+            <th>価格</th>
+            <th>購入URL</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <label for="microcontroller">マイコン</label><br>
+              <select id="microcontroller" name="microcontroller">
+                <option value="xiao-esp32c3" data-price="¥1,080" data-url="https://akizukidenshi.com/catalog/g/g117454/">Seeed Studio XIAO ESP32C3</option>
+                <option value="xiao-esp32s3" data-price="¥1,480" data-url="https://akizukidenshi.com/catalog/g/g118078/">Seeed Studio XIAO ESP32S3</option>
+                <option value="xiao-esp32s3-sense" data-price="¥2,660" data-url="https://akizukidenshi.com/catalog/g/g118079/">Seeed Studio XIAO ESP32S3 Sense</option>
+              </select>
+              <p class="part-role">ローバー全体の制御を担当する頭脳部分です。</p>
+              <p class="microcontroller-note">XIAO ESP32S3 Sense を選ぶと、Wi-Fi経由でカメラ映像を見ながらリアルタイムに操縦できる構成にできます。</p>
+            </td>
+            <td id="microcontroller-price">¥1,080</td>
+            <td><a id="microcontroller-link" href="https://akizukidenshi.com/catalog/g/g117454/" target="_blank">商品ページを見る</a></td>
+          </tr>
+          <tr>
+            <td>
+              <label for="battery-select">バッテリー</label><br>
+              <select id="battery-select" name="battery-select">
+                <option value="lithium" data-price="Amazonで確認" data-url="https://www.amazon.co.jp/s?k=%E3%83%AA%E3%83%81%E3%82%A6%E3%83%A0%E3%82%A4%E3%82%AA%E3%83%B3+%E3%83%90%E3%83%83%E3%83%86%E3%83%AA%E3%83%BC">リチウムイオンバッテリー</option>
+                <option value="9v" data-price="Amazonで確認" data-url="https://www.amazon.co.jp/s?k=9v+%E4%B9%BE%E9%9B%BB%E6%B1%A0">9V乾電池</option>
+              </select>
+              <p class="part-role">各パーツへ電力を供給する電源です。</p>
+              <p class="microcontroller-note" id="battery-note">カメラを使う場合や高出力が必要な場合はリチウムイオンバッテリーを選んだ方がよいですが、高くなりやすいです。</p>
+            </td>
+            <td id="battery-price">Amazonで確認</td>
+            <td><a id="battery-link" href="https://www.amazon.co.jp/s?k=%E3%83%AA%E3%83%81%E3%82%A6%E3%83%A0%E3%82%A4%E3%82%AA%E3%83%B3+%E3%83%90%E3%83%83%E3%83%86%E3%83%AA%E3%83%BC" target="_blank">商品ページを見る</a></td>
+          </tr>
+          <tr>
+            <td>
+              XT30コネクター オス 基板取付用 XT30PW-M
+              <p class="part-role">バッテリーと基板の電源ラインを着脱しやすくする電源コネクターです。</p>
+            </td>
+            <td>¥70</td>
+            <td><a href="https://akizukidenshi.com/catalog/g/g117949/" target="_blank">商品ページを見る</a></td>
+          </tr>
+          <tr>
+            <td>
+              降圧コンバーター
+              <p class="part-role">バッテリー電圧を必要な電圧まで下げて安定供給します。</p>
+            </td>
+            <td>Amazonで確認</td>
+            <td><a href="https://www.amazon.co.jp/DROK-%E9%99%8D%E5%9C%A7%E3%82%B3%E3%83%B3%E3%83%90%E3%83%BC%E3%82%BF%E3%83%BC-%E3%83%9F%E3%83%8B%E9%9B%BB%E5%9C%A7%E3%83%AC%E3%82%AE%E3%83%A5%E3%83%AC%E3%83%BC%E3%82%BF%E3%83%BC%E3%83%9C%E3%83%BC%E3%83%89-%E5%9B%BA%E5%AE%9A%E3%81%A8%E8%AA%BF%E6%95%B4%E5%8F%AF%E8%83%BD%E5%87%BA%E5%8A%9B%E9%9B%BB%E5%9C%A7%E5%A4%89%E5%9C%A7%E5%99%A8-%E9%9B%BB%E6%BA%90%E3%82%B9%E3%82%BF%E3%83%93%E3%83%A9%E3%82%A4%E3%82%B6%E3%83%BC%E3%83%A2%E3%82%B8%E3%83%A5%E3%83%BC%E3%83%AB/dp/B0BB6RL227/ref=sr_1_8?__mk_ja_JP=%E3%82%AB%E3%82%BF%E3%82%AB%E3%83%8A&crid=12CP7LO6PXJKW&dib=eyJ2IjoiMSJ9._U8VhFnf6QBqcjN6N7YOvX4mHOso6OpF_MRO1bHyVEe4HAcup6uYme5HncT78vcsB27AVUgmp0N5F7SY-Laq9FNhwecwLxw1ee6PpY9IgFfAUkMdh58WElhlAgQfVO_HKqWS0hftgrBjHqrPUt1BbQrMZsK1WlxKxCIKuz4e91bqIPikZjWtl-e-hSsjSsAckOwbnmikeGjn2tkhpk9a7UbDszKIZHyLEtJHqDF6dt0U5oSZ0cG-1vrYSccdOXoBsxnLB1i_dH0YUlGUAjP5pZ9pIpmriW45gS4hXxxgp_g.EfdV6uO74gF5L-LqzYN_V059UjIrQDve90Qn5zb22rI&dib_tag=se&keywords=5V%2B%E3%82%B3%E3%83%B3%E3%83%90%E3%83%BC%E3%82%BF%E3%83%BC&qid=1774194060&s=electronics&sprefix=5v%2B%E3%82%B3%E3%83%B3%E3%83%90%E3%83%BC%E3%82%BF%E3%83%BC%2Celectronics%2C192&sr=1-8&ufe=app_do%3Aamzn1.fos.d8e7ee72-073f-4b97-8ec0-59c18d6dfebe&th=1" target="_blank">商品ページを見る</a></td>
+          </tr>
+          <tr>
+            <td>
+              FEETECH ギアードモーター FM90
+              <p class="part-role">左右のタイヤを回してローバーを走行させる駆動用モーターです。2個必要です。</p>
+            </td>
+            <td>¥330 × 2</td>
+            <td><a href="https://akizukidenshi.com/catalog/g/g114801/" target="_blank">商品ページを見る</a></td>
+          </tr>
+          <tr>
+            <td>
+              XHコネクター ベース付ポスト サイド型 2P S2B-XH-A(LF)(SN)
+              <p class="part-role">モーターとの接続に使う基板用コネクターです。左右のモーター用に2個必要です。</p>
+            </td>
+            <td>¥15 × 2</td>
+            <td><a href="https://akizukidenshi.com/catalog/g/g112262/" target="_blank">商品ページを見る</a></td>
+          </tr>
+          <tr>
+            <td>
+              積層セラミックコンデンサー 1μF50V X7R 5mm <span class="optional-badge">オプション</span>
+              <p class="part-role">モーターのアウトプットに追加できる任意部品です。回転時に出るノイズを抑え、誤動作や電源ラインへの影響を減らしやすくします。</p>
+            </td>
+            <td>¥20</td>
+            <td><a href="https://akizukidenshi.com/catalog/g/g108150/" target="_blank">商品ページを見る</a></td>
+          </tr>
+          <tr>
+            <td>
+              TB6612モータードライバー
+              <p class="part-role">マイコンの信号を受けてモーターの回転方向や速度を制御します。</p>
+            </td>
+            <td>¥380</td>
+            <td><a href="https://akizukidenshi.com/catalog/g/g116947/" target="_blank">商品ページを見る</a></td>
+          </tr>
+          <tr>
+            <td>
+              姿勢センサIMU <span class="optional-badge">オプション</span>
+              <p class="part-role">車体の傾きや動きを検出したいときに追加できる任意のセンサです。</p>
+            </td>
+            <td>Amazonで確認</td>
+            <td><a href="https://www.amazon.co.jp/ps61003-MPU-6050-%E4%BD%BF%E7%94%A8-%EF%BC%93%E8%BB%B8%E3%82%B8%E3%83%A3%E3%82%A4%E3%83%AD%E3%82%B9%E3%82%B3%E3%83%BC%E3%83%97%E3%83%BB%EF%BC%93%E8%BB%B8%E5%8A%A0%E9%80%9F%E5%BA%A6%E3%82%BB%E3%83%B3%E3%82%B5%E3%83%BC-%E3%83%A2%E3%82%B8%E3%83%A5%E3%83%BC%E3%83%AB/dp/B008BOPN40/ref=sr_1_6?dib=eyJ2IjoiMSJ9.42X7FTstpNcHweli9UHZt7PC1KgI2QqnX8DKxVGlw04_PFPZiNdZ19wXnwQjq5JfqoZ7Tkn2IUgl5R2WeG1Ig-OfFKtfS1sGsV21iE_-pZrEoogb25EeO9s3cq6TXiQzX6shrAKMdY9UfyiMzzUk3xCY1F_YQ7RZm2safo6d6KHD8jFq1f7S_743JbTFAtYtumcUVUCUNMobSvwjmqDXRdlpNBPZVPjMHBl7j4b7-ogzzdVjzZlpUYiYXTl6iHjp_aPkPmp-N_-Yj68N8sN-bTp6VzPn_vAL46HgotdoF08.jnXN91fDz8Im5RFf-tqaqUs8SK47sNe9CrBrO1na3AE&dib_tag=se&keywords=MPU9250&qid=1774196724&sr=8-6&ufe=app_do%3Aamzn1.fos.d8e7ee72-073f-4b97-8ec0-59c18d6dfebe" target="_blank">商品ページを見る</a></td>
+          </tr>
+          <tr>
+            <td>
+              <label for="tire-select">タイヤ</label><br>
+              <select id="tire-select" name="tire-select">
+                <option value="street" data-price="選定中">ストリートタイプ</option>
+                <option value="block" data-price="選定中">ブロックタイヤ</option>
+                <option value="slick" data-price="選定中">スリックタイヤ</option>
+              </select>
+              <p class="part-role">路面をとらえて走行性能を決める足まわりの部品です。</p>
+              <p class="tire-note">3種類の候補から選べるようにしてあり、選択に合わせてイメージを表示します。</p>
+            </td>
+            <td id="tire-price">選定中</td>
+            <td>
+              <div class="tire-preview-wrap">
+                <img id="tire-preview" class="tire-preview" alt="ストリートタイプのタイヤ画像">
+                <p id="tire-caption" class="tire-caption">ストリートタイプ</p>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              OLEDディスプレイ
+              <p class="part-role">状態表示や簡単な情報表示を行う小型画面です。</p>
+            </td>
+            <td>Amazonで確認</td>
+            <td><a href="https://www.amazon.co.jp/YUWENW-OLED%E3%83%87%E3%82%A3%E3%82%B9%E3%83%97%E3%83%AC%E3%82%A4-0-96%E3%82%A4%E3%83%B3%E3%83%81-OLED%E3%83%A2%E3%82%B8%E3%83%A5%E3%83%BC%E3%83%AB-Arduino%E3%81%AB%E5%AF%BE%E5%BF%9C/dp/B0DJ7B8P48/ref=sr_1_1_sspa?dib=eyJ2IjoiMSJ9.taiBTPMkoK_7pzI4tSJyJ8wP3B-z_flQb8XOSY4jcDx0W_85qolIxUkjR6ZaLgCWoY1ZtcwBGP5UZ7Wdaq-3q5vS3CwUUdxnrW7B9j881VIJqU1L1tUR4QSxICYDFjKxBIX8of5f__pHCMMGV48VyN9Z2V9UdHicn9i1_iCy6MEeBd2ZXyBxEyZ2yTHevjnNLTmugUQvxdAIlHkrwGwIQte3w6rxtJ7HQzzRlgYu56RuluP07VHs-2LS6HvJKGFXrKsURUOtiqFXTzTiB-wCEGQI2f89uHMIBqiGcx_o9TE.jibN0opIddprUIzjujLC0W5rNTNKnsfkjYgTXEVtScI&dib_tag=se&keywords=OLED&qid=1774194203&sr=8-1-spons&ufe=app_do%3Aamzn1.fos.d8e7ee72-073f-4b97-8ec0-59c18d6dfebe&sp_csd=d2lkZ2V0TmFtZT1zcF9hdGY&th=1" target="_blank">商品ページを見る</a></td>
+          </tr>
+          <tr>
+            <td>
+              コネクター用ハウジング 4P
+              <p class="part-role">OLEDとの接続に使う4ピンのハウジングです。</p>
+            </td>
+            <td>¥10</td>
+            <td><a href="https://akizukidenshi.com/catalog/g/g112153/" target="_blank">商品ページを見る</a></td>
+          </tr>
+          <tr>
+            <td>
+              基板用スライドスイッチ SS-12D00-G5
+              <p class="part-role">メイン電源のオンオフ切り替えに使う基板取付用の小型スイッチです。</p>
+            </td>
+            <td>¥20</td>
+            <td><a href="https://akizukidenshi.com/catalog/g/g108790/" target="_blank">商品ページを見る</a></td>
+          </tr>
+          <tr>
+            <td>
+              汎用整流用ダイオード 1000V1A 1N4007
+              <p class="part-role">電源基板の整流用に使うダイオードです。逆接続対策や電流の逆流防止にも使えます。</p>
+            </td>
+            <td>¥100 / 20本</td>
+            <td><a href="https://akizukidenshi.com/catalog/g/g100934/" target="_blank">商品ページを見る</a></td>
+          </tr>
+          <tr>
+            <td>
+              3mm砲弾型黄緑色LED 570nm 100mcd 70° OSG8HA3Z74A
+              <p class="part-role">電源のON/OFF確認用に使うインジケーターLEDです。</p>
+            </td>
+            <td>¥10</td>
+            <td><a href="https://akizukidenshi.com/catalog/g/g111637/" target="_blank">商品ページを見る</a></td>
+          </tr>
+          <tr>
+            <td>
+              抵抗 約200Ω
+              <p class="part-role">電源確認用LEDの電圧降下と電流制限に使う抵抗です。</p>
+            </td>
+            <td>別途準備</td>
+            <td>リンクなし</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="content-card" id="design">
+      <h2>設計</h2>
+      <p>材料選びに加えて、どんなローバーにしたいかを設計段階で選べるようにしてあります。</p>
+
+      <div class="design-selector">
+        <div class="form-row">
+          <label for="design-select">設計プラン</label>
+          <select id="design-select" name="design-select">
+            <option value="balanced">バランス重視</option>
+            <option value="speed">スピード重視</option>
+            <option value="camera">観察・カメラ重視</option>
+          </select>
+        </div>
+
+        <div class="design-preview">
+          <h3 id="design-title">バランス重視</h3>
+          <p id="design-description">初めて作るときに扱いやすい標準設計です。走行・制御・拡張のしやすさを均等に確保します。</p>
+          <div class="design-meta">
+            <div class="design-meta-item">
+              <span class="design-meta-label">おすすめタイヤ</span>
+              <span id="design-tire">ストリートタイプ</span>
+            </div>
+            <div class="design-meta-item">
+              <span class="design-meta-label">重視ポイント</span>
+              <span id="design-focus">安定した走行と調整のしやすさ</span>
+            </div>
+            <div class="design-meta-item">
+              <span class="design-meta-label">メモ</span>
+              <span id="design-note">車体中央にバッテリーを置くとバランスが取りやすいです。</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="content-card" id="assembly">
+      <h2>組み立て方</h2>
+      <p>このセクションはあとから自由に編集できます。各手順の説明文を書き換えて使ってください。</p>
+      <ol class="steps-list">
+        <li>
+          <span class="step-title">手順1</span>
+          ここに手順1の説明を書いてください。
+        </li>
+        <li>
+          <span class="step-title">手順2</span>
+          ここに手順2の説明を書いてください。
+        </li>
+        <li>
+          <span class="step-title">手順3</span>
+          ここに手順3の説明を書いてください。
+        </li>
+      </ol>
+    </section>
+
+    <section class="content-card" id="coding">
+      <h2>開発環境セットアップ</h2>
+      <p>開発環境は3パターンから選べるようにしてあり、選択した環境の説明枠だけが表示されます。</p>
+
+      <div class="design-selector">
+        <div class="form-row">
+          <label for="environment-select">開発環境</label>
+          <select id="environment-select" name="environment-select">
+            <option value="platformio">PlatformIO（推奨）</option>
+            <option value="arduino">Arduino IDE</option>
+            <option value="micropython">MicroPython</option>
+          </select>
+        </div>
+
+        <div class="setup-panel">
+          <h3 id="environment-title">PlatformIO（推奨）</h3>
+          <p id="environment-description">セットアップ説明文は未記入です。</p>
+        </div>
+      </div>
+
+      <h2>コーディング</h2>
+      <p>説明文とコードを交互に並べられるようにしてあります。内容はあとから自由に編集してください。</p>
+
+      <div class="coding-block">
+        <h3>IMUテストコード</h3>
+        <p>MPU6050 を I2C で初期化し、加速度と角速度の6軸データをシリアルモニタへ出力する確認用コードです。</p>
+        <pre><code>#include &lt;Arduino.h&gt;
+#include &lt;Wire.h&gt;
+#include &lt;MPU6050.h&gt;
+
+MPU6050 accelgyro;
+
+int16_t ax, ay, az; // 加速度
+int16_t gx, gy, gz; // 角速度
+
+void setup() {
+  Wire.begin();
+  Serial.begin(115200);
+  accelgyro.initialize(); // I2Cデバイスの初期化
+  delay(300);
+}
+
+void loop() {
+  accelgyro.getMotion6(&amp;ax, &amp;ay, &amp;az, &amp;gx, &amp;gy, &amp;gz);
+  Serial.print(ax); Serial.print(", ");
+  Serial.print(ay); Serial.print(", ");
+  Serial.print(az); Serial.print(" : ");
+  Serial.print(gx); Serial.print(", ");
+  Serial.print(gy); Serial.print(", ");
+  Serial.print(gz); Serial.println("");
+  delay(100);
+}</code></pre>
+      </div>
+
+      <div class="coding-block">
+        <h3>コード2の説明</h3>
+        <p>ここに2つ目のコードについての説明を書いてください。</p>
+        <pre><code>// ここに2つ目のコードを書いてください
+void setup() {
+}
+
+void loop() {
+}</code></pre>
+      </div>
+
+      <div class="coding-block">
+        <h3>コード3の説明</h3>
+        <p>ここに3つ目のコードについての説明を書いてください。</p>
+        <pre><code>// ここに3つ目のコードを書いてください
+void setup() {
+}
+
+        void loop() {
+}</code></pre>
+      </div>
+    </section>
+
+    <section class="content-card" id="support">
+      <h2>サポートフォーム</h2>
+      <p>質問や相談を送るためのフォームです。講座登録番号を入力しないと質問できないようにしてあります。</p>
+
+      <form class="support-form" id="support-form">
+        <div class="form-row">
+          <label for="registration-number">講座登録番号</label>
+          <input id="registration-number" name="registration-number" type="text" placeholder="例: RSEC-2026-001" required>
+          <p class="form-note">講座登録番号の入力が必須です。未入力の場合は質問を送信できません。</p>
+        </div>
+
+        <div class="form-row">
+          <label for="support-question">質問内容</label>
+          <textarea id="support-question" name="support-question" placeholder="ここに質問内容を書いてください。" required></textarea>
+        </div>
+
+        <button class="support-submit" id="support-submit" type="submit" disabled>質問を送信</button>
+        <p class="support-status" id="support-status">講座登録番号を入力すると送信できるようになります。</p>
+      </form>
+    </section>
+  </div>
+
+  <script>
+    const microcontrollerSelect = document.getElementById("microcontroller");
+    const microcontrollerPrice = document.getElementById("microcontroller-price");
+    const microcontrollerLink = document.getElementById("microcontroller-link");
+    const batterySelect = document.getElementById("battery-select");
+    const batteryPrice = document.getElementById("battery-price");
+    const batteryLink = document.getElementById("battery-link");
+    const batteryNote = document.getElementById("battery-note");
+    const tireSelect = document.getElementById("tire-select");
+    const tirePrice = document.getElementById("tire-price");
+    const tirePreview = document.getElementById("tire-preview");
+    const tireCaption = document.getElementById("tire-caption");
+    const designSelect = document.getElementById("design-select");
+    const designTitle = document.getElementById("design-title");
+    const designDescription = document.getElementById("design-description");
+    const designTire = document.getElementById("design-tire");
+    const designFocus = document.getElementById("design-focus");
+    const designNote = document.getElementById("design-note");
+    const environmentSelect = document.getElementById("environment-select");
+    const environmentTitle = document.getElementById("environment-title");
+    const environmentDescription = document.getElementById("environment-description");
+    const registrationNumberInput = document.getElementById("registration-number");
+    const supportForm = document.getElementById("support-form");
+    const supportSubmit = document.getElementById("support-submit");
+    const supportStatus = document.getElementById("support-status");
+
+    const tireImages = {
+      street: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 160'><rect width='240' height='160' rx='20' fill='%23f4f7f4'/><ellipse cx='120' cy='80' rx='72' ry='72' fill='%2323282b'/><ellipse cx='120' cy='80' rx='46' ry='46' fill='%236c767a'/><ellipse cx='120' cy='80' rx='20' ry='20' fill='%23d8dfdc'/><g stroke='%239ba5aa' stroke-width='4'><line x1='120' y1='40' x2='120' y2='120'/><line x1='80' y1='80' x2='160' y2='80'/><line x1='92' y1='52' x2='148' y2='108'/><line x1='148' y1='52' x2='92' y2='108'/></g><g stroke='%23454e52' stroke-width='5'><line x1='66' y1='38' x2='174' y2='122'/><line x1='58' y1='52' x2='166' y2='136'/><line x1='74' y1='24' x2='182' y2='108'/></g></svg>",
+      block: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 160'><rect width='240' height='160' rx='20' fill='%23f4f7f4'/><ellipse cx='120' cy='80' rx='72' ry='72' fill='%2323282b'/><ellipse cx='120' cy='80' rx='44' ry='44' fill='%23626d72'/><ellipse cx='120' cy='80' rx='18' ry='18' fill='%23d8dfdc'/><g fill='%23464f53'><rect x='52' y='24' width='20' height='18' rx='4'/><rect x='86' y='12' width='20' height='18' rx='4'/><rect x='120' y='8' width='20' height='18' rx='4'/><rect x='154' y='12' width='20' height='18' rx='4'/><rect x='174' y='34' width='18' height='20' rx='4'/><rect x='182' y='68' width='18' height='20' rx='4'/><rect x='174' y='102' width='18' height='20' rx='4'/><rect x='154' y='124' width='20' height='18' rx='4'/><rect x='120' y='134' width='20' height='18' rx='4'/><rect x='86' y='124' width='20' height='18' rx='4'/><rect x='52' y='102' width='18' height='20' rx='4'/><rect x='40' y='68' width='18' height='20' rx='4'/><rect x='52' y='34' width='18' height='20' rx='4'/></g></svg>",
+      slick: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 160'><rect width='240' height='160' rx='20' fill='%23f4f7f4'/><ellipse cx='120' cy='80' rx='72' ry='72' fill='%231f2326'/><ellipse cx='120' cy='80' rx='48' ry='48' fill='%23687175'/><ellipse cx='120' cy='80' rx='22' ry='22' fill='%23dbe1de'/><g stroke='%239aa3a7' stroke-width='4'><line x1='120' y1='34' x2='120' y2='126'/><line x1='74' y1='80' x2='166' y2='80'/><line x1='89' y1='49' x2='151' y2='111'/><line x1='151' y1='49' x2='89' y2='111'/></g><circle cx='120' cy='80' r='65' fill='none' stroke='%23343b3f' stroke-width='4'/></svg>"
+    };
+
+    const designOptions = {
+      balanced: {
+        title: "バランス重視",
+        description: "初めて作るときに扱いやすい標準設計です。走行・制御・拡張のしやすさを均等に確保します。",
+        tire: "ストリートタイプ",
+        focus: "安定した走行と調整のしやすさ",
+        note: "車体中央にバッテリーを置くとバランスが取りやすいです。"
+      },
+      speed: {
+        title: "スピード重視",
+        description: "軽量な構成にして、平らな路面で気持ちよく走らせるための設計です。直進性と加速感を優先します。",
+        tire: "スリックタイヤ",
+        focus: "軽量化と転がり抵抗の低減",
+        note: "配線を短くまとめ、不要なオプション部品を減らすと効果が出やすいです。"
+      },
+      camera: {
+        title: "観察・カメラ重視",
+        description: "カメラやセンサを載せて周囲を観察しやすくする設計です。やや重量が増えるため安定性も意識します。",
+        tire: "ブロックタイヤ",
+        focus: "積載性と段差への強さ",
+        note: "XIAO ESP32S3 Sense と組み合わせると映像確認をしやすくなります。"
+      }
+    };
+
+    const environmentOptions = {
+      platformio: {
+        title: "PlatformIO（推奨）",
+        description: "セットアップ説明文は未記入です。"
+      },
+      arduino: {
+        title: "Arduino IDE",
+        description: "セットアップ説明文は未記入です。"
+      },
+      micropython: {
+        title: "MicroPython",
+        description: "セットアップ説明文は未記入です。"
+      }
+    };
+
+    const batteryOptions = {
+      lithium: "カメラを使う場合や高出力が必要な場合はリチウムイオンバッテリーを選んだ方がよいですが、高くなりやすいです。",
+      "9v": "9V乾電池は出力が小さいです。"
+    };
+
+    microcontrollerSelect.addEventListener("change", () => {
+      const selectedOption = microcontrollerSelect.options[microcontrollerSelect.selectedIndex];
+      microcontrollerPrice.textContent = selectedOption.dataset.price;
+      microcontrollerLink.href = selectedOption.dataset.url;
+    });
+
+    const updateBatteryPreview = () => {
+      const selectedOption = batterySelect.options[batterySelect.selectedIndex];
+      batteryPrice.textContent = selectedOption.dataset.price;
+      batteryLink.href = selectedOption.dataset.url;
+      batteryNote.textContent = batteryOptions[selectedOption.value];
+    };
+
+    const updateTirePreview = () => {
+      const selectedOption = tireSelect.options[tireSelect.selectedIndex];
+      tirePrice.textContent = selectedOption.dataset.price;
+      tirePreview.src = tireImages[selectedOption.value];
+      tirePreview.alt = selectedOption.text + "のタイヤ画像";
+      tireCaption.textContent = selectedOption.text;
+    };
+
+    const updateDesignPreview = () => {
+      const selectedDesign = designOptions[designSelect.value];
+      designTitle.textContent = selectedDesign.title;
+      designDescription.textContent = selectedDesign.description;
+      designTire.textContent = selectedDesign.tire;
+      designFocus.textContent = selectedDesign.focus;
+      designNote.textContent = selectedDesign.note;
+    };
+
+    const updateEnvironmentPreview = () => {
+      const selectedEnvironment = environmentOptions[environmentSelect.value];
+      environmentTitle.textContent = selectedEnvironment.title;
+      environmentDescription.textContent = selectedEnvironment.description;
+    };
+
+    updateTirePreview();
+    tireSelect.addEventListener("change", updateTirePreview);
+    updateBatteryPreview();
+    batterySelect.addEventListener("change", updateBatteryPreview);
+    updateDesignPreview();
+    designSelect.addEventListener("change", updateDesignPreview);
+    updateEnvironmentPreview();
+    environmentSelect.addEventListener("change", updateEnvironmentPreview);
+
+    const updateSupportState = () => {
+      const hasRegistrationNumber = registrationNumberInput.value.trim().length > 0;
+      supportSubmit.disabled = !hasRegistrationNumber;
+      supportStatus.textContent = hasRegistrationNumber
+        ? "講座登録番号を確認できたので、質問を送信できます。"
+        : "講座登録番号を入力すると送信できるようになります。";
+    };
+
+    registrationNumberInput.addEventListener("input", updateSupportState);
+    updateSupportState();
+
+    supportForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      if (registrationNumberInput.value.trim().length === 0) {
+        supportStatus.textContent = "講座登録番号を入力してから質問を送信してください。";
+        registrationNumberInput.focus();
+        return;
+      }
+
+      supportStatus.textContent = "フォームの内容を確認しました。送信先はあとから設定できます。";
+    });
+  </script>
+
+</body>
+</html>
