@@ -95,6 +95,17 @@
       background: rgba(255, 255, 255, 0.16);
     }
 
+    .hero-link-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .hero-link-row .language-link {
+      margin-top: 0;
+    }
+
     .hero p {
       margin: 14px 0 0;
       max-width: 700px;
@@ -131,6 +142,270 @@
     .content-card h2 {
       margin: 0 0 10px;
       font-size: 28px;
+    }
+
+    .section-heading {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 10px;
+    }
+
+    .section-heading h2 {
+      margin: 0;
+    }
+
+    .section-link {
+      display: inline-flex;
+      align-items: center;
+      padding: 12px 18px;
+      border: 1px solid rgba(28, 106, 82, 0.2);
+      border-radius: 999px;
+      color: #1c6a52;
+      text-decoration: none;
+      font-size: 16px;
+      font-weight: 700;
+      background: rgba(255, 255, 255, 0.8);
+      transition: background-color 0.2s ease;
+    }
+
+    .section-link:hover {
+      background: #edf3ee;
+    }
+
+    .schedule-intro {
+      margin: 0 0 24px;
+      line-height: 1.7;
+    }
+
+    .schedule-layout {
+      display: grid;
+      gap: 24px;
+      grid-template-columns: minmax(0, 1.4fr) minmax(280px, 0.9fr);
+      align-items: start;
+    }
+
+    .calendar-stack {
+      display: grid;
+      gap: 20px;
+    }
+
+    .calendar-panel {
+      padding: 22px;
+      border: 1px solid #d7ddd7;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.86);
+    }
+
+    .calendar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .calendar-header h3,
+    .schedule-list h3 {
+      margin: 0;
+      font-size: 22px;
+      color: #1f3d30;
+    }
+
+    .calendar-caption {
+      margin: 0;
+      font-size: 14px;
+      color: #5a665d;
+    }
+
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .calendar-weekday,
+    .calendar-day {
+      border-radius: 16px;
+    }
+
+    .calendar-weekday {
+      padding: 10px 6px;
+      text-align: center;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #5a665d;
+      background: #edf3ee;
+    }
+
+    .calendar-day {
+      min-height: 94px;
+      padding: 12px;
+      border: 1px solid #d7ddd7;
+      background: #f9fbf8;
+      box-sizing: border-box;
+    }
+
+    .calendar-day.muted {
+      background: rgba(239, 242, 239, 0.72);
+      color: #8a968e;
+    }
+
+    .calendar-day.event-day {
+      border-color: #7ca38f;
+      background: linear-gradient(180deg, #eef7f1 0%, #dcecdf 100%);
+      box-shadow: inset 0 0 0 1px rgba(28, 106, 82, 0.08);
+    }
+
+    .calendar-date {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      font-weight: 700;
+      color: #1f3d30;
+      background: rgba(255, 255, 255, 0.84);
+    }
+
+    .event-day .calendar-date {
+      background: #1c6a52;
+      color: #f6f7f3;
+    }
+
+    .calendar-event {
+      margin: 10px 0 0;
+      font-size: 13px;
+      line-height: 1.45;
+      color: #294237;
+    }
+
+    .schedule-list {
+      display: grid;
+      gap: 14px;
+    }
+
+    .schedule-card {
+      padding: 18px;
+      border: 1px solid #d7ddd7;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.86);
+    }
+
+    .schedule-date {
+      display: inline-block;
+      margin-bottom: 8px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: #edf3ee;
+      color: #1c6a52;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .schedule-card h4 {
+      margin: 0 0 8px;
+      font-size: 18px;
+      color: #1f3d30;
+    }
+
+    .schedule-card p {
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    .schedule-agenda {
+      margin: 0;
+      padding-left: 22px;
+    }
+
+    .schedule-agenda li {
+      margin-bottom: 10px;
+      line-height: 1.7;
+    }
+
+    .schedule-agenda li:last-child {
+      margin-bottom: 0;
+    }
+
+    .schedule-time {
+      margin-top: 10px;
+      color: #1c6a52;
+      font-weight: 700;
+    }
+
+    .schedule-note {
+      margin: 4px 0 0;
+      font-size: 13px;
+      line-height: 1.6;
+      color: #5a665d;
+    }
+
+    .schedule-subnote {
+      margin: 4px 0 0;
+      font-size: 13px;
+      line-height: 1.6;
+      color: #5a665d;
+    }
+
+    .mentor-grid {
+      display: grid;
+      gap: 18px;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
+
+    .mentor-card {
+      padding: 20px;
+      border: 1px solid #d7ddd7;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.86);
+    }
+
+    .mentor-card h3 {
+      margin: 0 0 8px;
+      font-size: 22px;
+      color: #1f3d30;
+    }
+
+    .mentor-role {
+      margin: 0 0 10px;
+      font-size: 14px;
+      font-weight: 700;
+      color: #1c6a52;
+    }
+
+    .mentor-affiliation {
+      margin: 0 0 10px;
+      font-size: 14px;
+      font-weight: 700;
+      color: #5a665d;
+    }
+
+    .mentor-origin {
+      margin: 0 0 10px;
+      font-size: 14px;
+      font-weight: 700;
+      color: #5a665d;
+    }
+
+    .mentor-card p {
+      margin: 0;
+      line-height: 1.7;
+    }
+
+    .schedule-location {
+      margin-top: 10px;
+      color: #b42318;
+      font-size: 19px;
+      font-weight: 700;
+      text-decoration: underline;
     }
 
     .design-selector {
@@ -428,12 +703,30 @@
       }
 
       .hero,
-      #materials {
+      #materials,
+      .content-card {
         padding: 22px;
       }
 
       .hero p {
         font-size: 16px;
+      }
+
+      .schedule-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .calendar-grid {
+        gap: 8px;
+      }
+
+      .calendar-day {
+        min-height: 78px;
+        padding: 10px;
+      }
+
+      .calendar-event {
+        font-size: 12px;
       }
 
       #materials table,
@@ -474,8 +767,234 @@
       <h1>電子工作編</h1>
       <p>make own tyny ROVER</p>
       <p>小型ローバーを自作しながら、電子工作と制御の基礎を楽しく体験するための講座です。</p>
-      <a class="language-link" href="index_en.html">View English Page</a>
+      <div class="hero-link-row">
+        <a class="language-link" href="index_en.html">View English Page</a>
+        <a class="language-link" href="https://masmaro.github.io/rsec/" target="_blank" rel="noopener noreferrer">公式HPを見る</a>
+      </div>
     </header>
+
+    <section class="content-card" id="schedule">
+      <div class="section-heading">
+        <h2>新歓プロジェクト日程</h2>
+        <a class="section-link" href="https://forms.gle/S8S9rqTkX8a2fn1v5" target="_blank" rel="noopener noreferrer">新歓プロジェクト参加フォームはこちら</a>
+      </div>
+      <p class="schedule-intro">2026年4月から5月にかけて、同じ内容で2回開催する予定です。各回とも 9:00 から 13:00 まで進行する想定でまとめています。</p>
+
+      <div class="schedule-layout">
+        <div class="calendar-stack">
+          <div class="calendar-panel">
+            <div class="calendar-header">
+              <h3>2026年4月</h3>
+              <p class="calendar-caption">第1回の日程を表示しています</p>
+            </div>
+
+            <div class="calendar-grid" aria-label="2026年4月のカレンダー">
+              <div class="calendar-weekday">Mon</div>
+              <div class="calendar-weekday">Tue</div>
+              <div class="calendar-weekday">Wed</div>
+              <div class="calendar-weekday">Thu</div>
+              <div class="calendar-weekday">Fri</div>
+              <div class="calendar-weekday">Sat</div>
+              <div class="calendar-weekday">Sun</div>
+
+              <div class="calendar-day muted"><span class="calendar-date">30</span></div>
+              <div class="calendar-day muted"><span class="calendar-date">31</span></div>
+              <div class="calendar-day"><span class="calendar-date">1</span></div>
+              <div class="calendar-day"><span class="calendar-date">2</span></div>
+              <div class="calendar-day"><span class="calendar-date">3</span></div>
+              <div class="calendar-day"><span class="calendar-date">4</span></div>
+              <div class="calendar-day"><span class="calendar-date">5</span></div>
+
+              <div class="calendar-day"><span class="calendar-date">6</span></div>
+              <div class="calendar-day"><span class="calendar-date">7</span></div>
+              <div class="calendar-day"><span class="calendar-date">8</span></div>
+              <div class="calendar-day"><span class="calendar-date">9</span></div>
+              <div class="calendar-day"><span class="calendar-date">10</span></div>
+              <div class="calendar-day"><span class="calendar-date">11</span></div>
+              <div class="calendar-day"><span class="calendar-date">12</span></div>
+
+              <div class="calendar-day"><span class="calendar-date">13</span></div>
+              <div class="calendar-day"><span class="calendar-date">14</span></div>
+              <div class="calendar-day"><span class="calendar-date">15</span></div>
+              <div class="calendar-day"><span class="calendar-date">16</span></div>
+              <div class="calendar-day"><span class="calendar-date">17</span></div>
+              <div class="calendar-day"><span class="calendar-date">18</span></div>
+              <div class="calendar-day event-day"><span class="calendar-date">19</span><p class="calendar-event">第1回 1日目 🍖</p></div>
+
+              <div class="calendar-day"><span class="calendar-date">20</span></div>
+              <div class="calendar-day"><span class="calendar-date">21</span></div>
+              <div class="calendar-day"><span class="calendar-date">22</span></div>
+              <div class="calendar-day"><span class="calendar-date">23</span></div>
+              <div class="calendar-day"><span class="calendar-date">24</span></div>
+              <div class="calendar-day"><span class="calendar-date">25</span></div>
+              <div class="calendar-day event-day"><span class="calendar-date">26</span><p class="calendar-event">第1回 2日目</p></div>
+
+              <div class="calendar-day"><span class="calendar-date">27</span></div>
+              <div class="calendar-day"><span class="calendar-date">28</span></div>
+              <div class="calendar-day"><span class="calendar-date">29</span></div>
+              <div class="calendar-day"><span class="calendar-date">30</span></div>
+              <div class="calendar-day"><span class="calendar-date">1</span></div>
+              <div class="calendar-day event-day"><span class="calendar-date">2</span><p class="calendar-event">第1回 3日目</p></div>
+              <div class="calendar-day"><span class="calendar-date">3</span></div>
+            </div>
+          </div>
+
+          <div class="calendar-panel">
+            <div class="calendar-header">
+              <h3>2026年5月</h3>
+              <p class="calendar-caption">第2回の日程を表示しています</p>
+            </div>
+
+            <div class="calendar-grid" aria-label="2026年5月のカレンダー">
+              <div class="calendar-weekday">Mon</div>
+              <div class="calendar-weekday">Tue</div>
+              <div class="calendar-weekday">Wed</div>
+              <div class="calendar-weekday">Thu</div>
+              <div class="calendar-weekday">Fri</div>
+              <div class="calendar-weekday">Sat</div>
+              <div class="calendar-weekday">Sun</div>
+
+              <div class="calendar-day muted"><span class="calendar-date">27</span></div>
+              <div class="calendar-day muted"><span class="calendar-date">28</span></div>
+              <div class="calendar-day muted"><span class="calendar-date">29</span></div>
+              <div class="calendar-day muted"><span class="calendar-date">30</span></div>
+              <div class="calendar-day"><span class="calendar-date">1</span></div>
+              <div class="calendar-day"><span class="calendar-date">2</span></div>
+              <div class="calendar-day"><span class="calendar-date">3</span></div>
+
+              <div class="calendar-day"><span class="calendar-date">4</span></div>
+              <div class="calendar-day"><span class="calendar-date">5</span></div>
+              <div class="calendar-day"><span class="calendar-date">6</span></div>
+              <div class="calendar-day"><span class="calendar-date">7</span></div>
+              <div class="calendar-day"><span class="calendar-date">8</span></div>
+              <div class="calendar-day event-day"><span class="calendar-date">9</span><p class="calendar-event">第2回 1日目 🍖</p></div>
+              <div class="calendar-day"><span class="calendar-date">10</span></div>
+
+              <div class="calendar-day"><span class="calendar-date">11</span></div>
+              <div class="calendar-day"><span class="calendar-date">12</span></div>
+              <div class="calendar-day"><span class="calendar-date">13</span></div>
+              <div class="calendar-day"><span class="calendar-date">14</span></div>
+              <div class="calendar-day"><span class="calendar-date">15</span></div>
+              <div class="calendar-day"><span class="calendar-date">16</span></div>
+              <div class="calendar-day event-day"><span class="calendar-date">17</span><p class="calendar-event">第2回 2日目</p></div>
+
+              <div class="calendar-day"><span class="calendar-date">18</span></div>
+              <div class="calendar-day"><span class="calendar-date">19</span></div>
+              <div class="calendar-day"><span class="calendar-date">20</span></div>
+              <div class="calendar-day"><span class="calendar-date">21</span></div>
+              <div class="calendar-day"><span class="calendar-date">22</span></div>
+              <div class="calendar-day event-day"><span class="calendar-date">23</span><p class="calendar-event">第2回 3日目</p></div>
+              <div class="calendar-day"><span class="calendar-date">24</span></div>
+
+              <div class="calendar-day"><span class="calendar-date">25</span></div>
+              <div class="calendar-day"><span class="calendar-date">26</span></div>
+              <div class="calendar-day"><span class="calendar-date">27</span></div>
+              <div class="calendar-day"><span class="calendar-date">28</span></div>
+              <div class="calendar-day"><span class="calendar-date">29</span></div>
+              <div class="calendar-day"><span class="calendar-date">30</span></div>
+              <div class="calendar-day"><span class="calendar-date">31</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="schedule-list">
+          <h3>予定一覧</h3>
+
+          <article class="schedule-card">
+            <span class="schedule-date">第1回</span>
+            <h4>4/19、4/26、5/2</h4>
+            <ol class="schedule-agenda">
+              <li>1日目は組み立て、環境構築、サークル説明、野田・葛飾合同BBQです。</li>
+              <li>2日目はテストコードを使って実際に動かす講座です。</li>
+              <li>3日目は完成まで仕上げる日です。</li>
+            </ol>
+            <p class="schedule-location">開催場所: 東京理科大学葛飾キャンパス</p>
+            <p class="schedule-subnote">教室等の詳細は後日連絡します。</p>
+            <p class="schedule-time">各日 9:00 - 13:00</p>
+          </article>
+
+          <article class="schedule-card">
+            <span class="schedule-date">第2回</span>
+            <h4>5/9、5/17、5/23</h4>
+            <ol class="schedule-agenda">
+              <li>1日目は組み立て、環境構築、サークル説明、野田・葛飾合同BBQです。</li>
+              <li>2日目はテストコードを使って実際に動かす講座です。</li>
+              <li>3日目は完成まで仕上げる日です。</li>
+            </ol>
+            <p class="schedule-location">開催場所: 東京理科大学野田キャンパス</p>
+            <p class="schedule-subnote">教室等の詳細は後日連絡します。</p>
+            <p class="schedule-time">各日 9:00 - 13:00</p>
+          </article>
+
+          <p class="schedule-note">注: BBQの詳細は公式SNSなどで最新情報を確認してください。</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="content-card" id="preface">
+      <h2>前書き</h2>
+      <p>ようこそ新入生の皆様、東京理科大学宇宙工学エンジニアサークルR-secへ。
+        工学とは、幅広い領域で、当サークルでも、回路設計、機械設計、コーディング等々いろいろ体験できます。
+        工学って静かな人が黙々とするもの！？と思っている方、
+        大間違いです。MIT出身の有名なエンジニアの仕事の大半はなんと会議です。残念ながら、優秀なエンジニアほど、人との会話に時間を割きます。
+        ですから、皆さんには、安易にAI等に聞くのでなく、是非センパイに聞いてください。
+        個人の技術力に差はありますが、R-secでのモノづくり経験、コミュニケーションにおいてはセンパイ（なはず）です。
+        わざわざ集まってものづくりをする意義、楽しさを我々はこのプロジェクトを通じて提供します。
+        <br>
+        長くなりましたが、
+        このプロジェクトは基本的に個人で進めていただき、集まる日だけ躓いたところ等の相談や、お互いで技術交流をして頂きます。
+        それでは、愉しいR-secライフを！
+      </p>
+    </section>
+
+    <section class="content-card" id="mentors">
+      <h2>センパイ紹介</h2>
+      <p>ここに新歓プロジェクトをサポートするセンパイたちの紹介を載せられます。</p>
+
+      <div class="mentor-grid">
+        <article class="mentor-card">
+          <h3>清水</h3>
+          <p class="mentor-role">役職: 代表</p>
+          <p class="mentor-affiliation">所属: 葛飾　機械</p>
+          <p class="mentor-origin">出身: 岡山</p>
+          <p>後輩を片目にみるM1がたまりません。</p>
+        </article>
+
+        <article class="mentor-card">
+          <h3>鈴木</h3>
+          <p class="mentor-role">役職: 電装</p>
+          <p class="mentor-affiliation">所属: 野田　電気電子情報工学科</p>
+          <p class="mentor-origin">出身: 川崎（治安のいいほう）</p>
+          <p>パンツが見えることもときたまございます</p>
+        </article>
+
+        <article class="mentor-card">
+          <h3>平井</h3>
+          <p class="mentor-role">役職: 便利屋</p>
+          <p class="mentor-affiliation">所属: 野田　機械</p>
+          <p class="mentor-origin">出身: 大阪にある我孫子じゃない我孫子</p>
+          <p>雑用が好きと公言</p>
+          
+        </article>
+        
+        <article class="mentor-card">
+          <h3>矢萩</h3>
+          <p class="mentor-role">役職: 構造</p>
+          <p class="mentor-affiliation">所属: 葛飾　物理？工学？</p>
+          <p class="mentor-origin">出身: ２３区</p>
+          <p>やはやはと呼ばれると喜びます</p>
+          
+        </article>
+        <article class="mentor-card">
+          <h3>佐藤</h3>
+          <p class="mentor-role">役職: ブローカー</p>
+          <p class="mentor-affiliation">所属: 漢城キャンパス　ましーん</p>
+          <p class="mentor-origin">出身: 板門店</p>
+          <p>脱北者</p>
+          
+        </article>
+      </div>
+    </section>
 
     <section id="materials">
       <h2>材料</h2>
