@@ -134,6 +134,58 @@
       backdrop-filter: blur(10px);
     }
 
+    .overview-toggle {
+      margin-top: 28px;
+      padding: 0;
+      overflow: hidden;
+    }
+
+    .overview-toggle summary {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 24px 28px;
+      cursor: pointer;
+      list-style: none;
+      font-size: 22px;
+      font-weight: 700;
+      color: #1f3d30;
+    }
+
+    .overview-toggle summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .overview-toggle summary::after {
+      content: "+";
+      flex-shrink: 0;
+      font-size: 28px;
+      line-height: 1;
+      color: #1c6a52;
+    }
+
+    .overview-toggle[open] summary::after {
+      content: "-";
+    }
+
+    .overview-body {
+      padding: 0 28px 28px;
+    }
+
+    .overview-body p {
+      margin: 0 0 16px;
+      line-height: 1.7;
+    }
+
+    .overview-video {
+      width: 100%;
+      border-radius: 18px;
+      border: 1px solid #d7ddd7;
+      background: #111;
+      box-shadow: 0 14px 28px rgba(36, 48, 40, 0.12);
+    }
+
     #materials h2 {
       margin: 0 0 10px;
       font-size: 28px;
@@ -947,6 +999,29 @@
       </p>
     </section>
 
+    <section class="content-card" id="teams-guide">
+      <h2>Teamsの使い方</h2>
+      <p>新歓プロジェクトの連絡、質問、資料共有は主に Teams を使って進めます。学校から配布される@ed.tus.ac.jpを使ってアカウントを作成してください。</p>
+
+      <div class="setup-panel">
+        <h3>最初にやること</h3>
+        <ol class="steps-list">
+          <li>
+            <span class="step-title">チームに参加する</span>
+            招待をしますので、新歓プロジェクトフォーム入力完了後、メールにて招待を送信します。招待が来るまで少々お待ちください。
+          </li>
+          <li>
+            <span class="step-title">通知を確認する</span>
+            スマホにもアプリを入れておくと便利です。
+          </li>
+          <li>
+            <span class="step-title">自己紹介をする</span>
+            自己紹介をしてみてください。
+          </li>
+        </ol>
+      </div>
+    </section>
+
     <section class="content-card" id="mentors">
       <h2>センパイ紹介</h2>
       <p>ここに新歓プロジェクトをサポートするセンパイたちの紹介を載せられます。</p>
@@ -995,6 +1070,17 @@
         </article>
       </div>
     </section>
+
+    <details class="content-card overview-toggle" id="overview">
+      <summary>overview_miniRC</summary>
+      <div class="overview-body">
+        <p>クリックすると mini RC の概観動画が見れます。</p>
+        <video class="overview-video" controls preload="metadata">
+          <source src="overview_miniRC.mp4" type="video/mp4">
+          お使いのブラウザは動画の再生に対応していません。
+        </video>
+      </div>
+    </details>
 
     <section id="materials">
       <h2>材料</h2>
