@@ -574,6 +574,56 @@
       font-family: Consolas, "Courier New", monospace;
     }
 
+    .coding-column {
+      margin-top: 18px;
+      border: 1px solid #d7ddd7;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.82);
+      overflow: hidden;
+    }
+
+    .coding-column summary {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 18px 20px;
+      cursor: pointer;
+      list-style: none;
+      font-size: 18px;
+      font-weight: 700;
+      color: #1f3d30;
+    }
+
+    .coding-column summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .coding-column summary::after {
+      content: "+";
+      flex-shrink: 0;
+      font-size: 24px;
+      line-height: 1;
+      color: #1c6a52;
+    }
+
+    .coding-column[open] summary::after {
+      content: "-";
+    }
+
+    .coding-column-body {
+      padding: 0 20px 20px;
+    }
+
+    .coding-column-body p {
+      margin: 0 0 12px;
+      line-height: 1.7;
+    }
+
+    .coding-column-body p:last-child {
+      margin-bottom: 0;
+    }
+
     .setup-panel {
       padding: 18px;
       border: 1px solid #d7ddd7;
@@ -592,10 +642,65 @@
       line-height: 1.7;
     }
 
-    .support-form {
-      margin-top: 22px;
+    .document-frame {
+      margin-top: 20px;
+      border: 1px solid #d7ddd7;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.86);
+      overflow: hidden;
+    }
+
+    .document-frame embed {
+      display: block;
+      width: 100%;
+      height: 720px;
+      border: none;
+      background: #f4f6f2;
+    }
+
+    .document-link {
+      display: inline-flex;
+      align-items: center;
+      margin-top: 16px;
+      padding: 12px 18px;
+      border: 1px solid rgba(28, 106, 82, 0.2);
+      border-radius: 999px;
+      color: #1c6a52;
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 700;
+      background: rgba(255, 255, 255, 0.82);
+    }
+
+    .teams-image-grid {
       display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 16px;
+      margin-top: 16px;
+    }
+
+    .teams-image-card {
+      margin: 0;
+      padding: 12px;
+      border: 1px solid #d7ddd7;
+      border-radius: 16px;
+      background: rgba(248, 250, 248, 0.92);
+    }
+
+    .teams-image-card img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 12px;
+      border: 1px solid #d7ddd7;
+      background: #fff;
+    }
+
+    .teams-image-card figcaption {
+      margin-top: 10px;
+      font-size: 14px;
+      line-height: 1.6;
+      color: #516056;
     }
 
     .form-row {
@@ -606,53 +711,6 @@
     .form-row label {
       font-weight: 700;
       color: #1f3d30;
-    }
-
-    .support-form input,
-    .support-form textarea {
-      width: 100%;
-      padding: 12px 14px;
-      border: 1px solid #bcc8bf;
-      border-radius: 12px;
-      background: rgba(255, 255, 255, 0.92);
-      font-size: 15px;
-      box-sizing: border-box;
-    }
-
-    .support-form textarea {
-      min-height: 140px;
-      resize: vertical;
-      line-height: 1.6;
-    }
-
-    .form-note {
-      margin: 0;
-      font-size: 13px;
-      line-height: 1.5;
-      color: #5a665d;
-    }
-
-    .support-submit {
-      justify-self: start;
-      padding: 12px 18px;
-      border: none;
-      border-radius: 999px;
-      background: #1c6a52;
-      color: #f6f7f3;
-      font-size: 15px;
-      font-weight: 700;
-      cursor: pointer;
-    }
-
-    .support-submit:disabled {
-      background: #9db1a7;
-      cursor: not-allowed;
-    }
-
-    .support-status {
-      margin: 0;
-      font-size: 14px;
-      color: #1c6a52;
     }
 
     #materials table {
@@ -770,6 +828,14 @@
 
       .calendar-grid {
         gap: 8px;
+      }
+
+      .teams-image-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .document-frame embed {
+        height: 520px;
       }
 
       .calendar-day {
@@ -1012,7 +1078,17 @@
           </li>
           <li>
             <span class="step-title">通知を確認する</span>
-            スマホにもアプリを入れておくと便利です。
+            既定では通知がならないので、以下の画像を参照して設定してください。すべてのチャンネルで適用してください。
+            <div class="teams-image-grid">
+              <figure class="teams-image-card">
+                <img src="teams_setting1.png" alt="Teams の通知設定画面 その1">
+                <figcaption>通知設定画面 1 枚目</figcaption>
+              </figure>
+              <figure class="teams-image-card">
+                <img src="teams_setting2.png" alt="Teams の通知設定画面 その2">
+                <figcaption>通知設定画面 2 枚目</figcaption>
+              </figure>
+            </div>
           </li>
           <li>
             <span class="step-title">自己紹介をする</span>
@@ -1180,6 +1256,30 @@
           </tr>
           <tr>
             <td>
+              AHT20 + BMP280 温湿度・気圧センサーモジュール <span class="optional-badge">オプション</span>
+              <p class="part-role">周囲の温度・湿度・気圧を計測したいときに追加できる任意のセンサです。</p>
+            </td>
+            <td>Amazonで確認</td>
+            <td><a href="https://www.amazon.co.jp/Youmile-5%E5%80%8B%E6%B8%A9%E5%BA%A6%E6%B9%BF%E5%BA%A6%E3%82%BB%E3%83%B3%E3%82%B5%E3%83%BC%E3%83%A2%E3%82%B8%E3%83%A5%E3%83%BC%E3%83%AB%E5%A4%A7%E6%B0%97%E5%9C%A7%E3%83%A2%E3%82%B8%E3%83%A5%E3%83%BC%E3%83%ABAHT20-BMP280-1%E3%82%BB%E3%83%B3%E3%82%B5%E3%83%BCBME280%E3%81%A8%E4%BA%A4%E6%8F%9B%E9%9B%8C%E9%9B%84%E3%83%87%E3%83%A5%E3%83%9D%E3%83%B3%E3%82%B1%E3%83%BC%E3%83%96%E3%83%AB%E4%BB%98%E3%81%8Dfor-Arduino%E7%94%A8/dp/B0D2WVHPDN/ref=pd_ci_mcx_mh_mcx_views_0_image?pd_rd_w=IEcdt&content-id=amzn1.sym.308c03cc-4571-454b-b6e1-051d8b645bdf%3Aamzn1.symc.c946cdfb-3c15-48da-90e6-e9b2cb1b2953&pf_rd_p=308c03cc-4571-454b-b6e1-051d8b645bdf&pf_rd_r=2ACXSAR1QJZZMS35G8KB&pd_rd_wg=GcA2S&pd_rd_r=f86ea908-10bf-449a-975c-733c742f3975&pd_rd_i=B0D2WVHPDN" target="_blank">商品ページを見る</a></td>
+          </tr>
+          <tr>
+            <td>
+              シャープ測距モジュール GP2Y0A21YK <span class="optional-badge">オプション</span>
+              <p class="part-role">前方との距離を非接触で測りたいときに追加できる任意の距離センサです。</p>
+            </td>
+            <td>¥550</td>
+            <td><a href="https://akizukidenshi.com/catalog/g/g102551/" target="_blank">商品ページを見る</a></td>
+          </tr>
+          <tr>
+            <td>
+              AliExpress オプション部品 <span class="optional-badge">オプション</span>
+              <p class="part-role">tofカメラです。各ピクセルごとの深度を測定できます。</p>
+            </td>
+            <td>AliExpressで確認</td>
+            <td><a href="https://ja.aliexpress.com/item/1005009970383495.html?spm=a2g0o.order_list.order_list_main.5.21ef585aQAKUXM&gatewayAdapt=glo2jpn" target="_blank">商品ページを見る</a></td>
+          </tr>
+          <tr>
+            <td>
               <label for="tire-select">タイヤ</label><br>
               <select id="tire-select" name="tire-select">
                 <option value="street" data-price="選定中">ストリートタイプ</option>
@@ -1303,10 +1403,13 @@
       </ol>
     </section>
 
-    <section class="content-card" id="coding">
+    <section class="content-card" id="setup">
       <h2>開発環境セットアップ</h2>
-      <p>開発環境は3パターンから選べるようにしてあり、選択した環境の説明枠だけが表示されます。</p>
-
+      <p>使用言語は C++ を使用します。巷ではpythonという便利な言語がありますが、
+        pythonはそれ以前の言語と違い、実用と多用途に特化した言語と言えます。しかし、多くのエンジニアは、初修の言語としてC言語を学びます。が、C言語はC++などと違いコンパイルエラーをあまりはいてくれません。ミスを見つけるのに時間がかかってしまいます。
+        ですから、今回は最もクラシックでロジカルな言語C++を選択します。もちろん、pythonでの開発ができるマイコンですので、
+        どうしてもしたい場合はセンパイまで。開発環境は C++ 用の 2 パターンを案内しておきます。ディレクトリの管理を大事にしたい人やこれからバンバンプログラミングをしていく方はPlatformIO(通称PIO)を強くお勧めします。しかし、万能で多機能な分、設定、使いかたが煩雑です。あまりにパソコン等に慣れていない場合は逆にArduinoIDEを推奨いたします。尚
+        ArduinoIDEはなんとスクラッチで書くこともできます(もちろん一番おすすめしないです)。わからない単語はある程度リンクをのせておきますのでクリックして調べてみてください。</p>
       <div class="design-selector">
         <div class="form-row">
           <label for="environment-select">開発環境</label>
@@ -1319,46 +1422,95 @@
 
         <div class="setup-panel">
           <h3 id="environment-title">PlatformIO（推奨）</h3>
-          <p id="environment-description">セットアップ説明文は未記入です。</p>
+          <p id="environment-description">C++ 開発の推奨環境です。セットアップ手順はこの欄に追記してください。</p>
         </div>
       </div>
+    </section>
 
+    <section class="content-card" id="coding">
       <h2>コーディング</h2>
-      <p>説明文とコードを交互に並べられるようにしてあります。内容はあとから自由に編集してください。</p>
+      <p><a href="https://qiita.com/tattsu_hitsuzi/items/552fc58c2da00cf857dc" target="_blank" rel="noopener noreferrer">コメント</a>等は極力日本語にしますが、英語で基本的には書きます。</p>
 
       <div class="coding-block">
-        <h3>IMUテストコード</h3>
-        <p>MPU6050 を I2C で初期化し、加速度と角速度の6軸データをシリアルモニタへ出力する確認用コードです。</p>
-        <pre><code>#include &lt;Arduino.h&gt;
-#include &lt;Wire.h&gt;
-#include &lt;MPU6050.h&gt;
+        <h3>基本構造</h3>
+        <p>Arduino 系のプログラムは、最初に 1 回だけ実行される <code>setup()</code> と、その後くり返し実行される <code>loop()</code> を基本にして構成します。setup()の前に定義を書きます。ここら辺は使いながら慣れてください（規則はいくらでもありますから、説明していくときりがないです）。
+        このコードを実際にコピペするのでなくて、手入力して書き込んでみてください。もちろんコメントアウトは書かなくていいですが、コメントアウトは適宜使用してみてください。</p>
+        <pre><code>#include &lt;Arduino.h&gt; // ここにライブラリを追加
 
-MPU6050 accelgyro;
+const int ledPin = 8; //ピンの定義　GPIOで記述する場合はD8とする。これはケースバイケース
 
-int16_t ax, ay, az; // 加速度
-int16_t gx, gy, gz; // 角速度
-
-void setup() {
-  Wire.begin();
-  Serial.begin(115200);
-  accelgyro.initialize(); // I2Cデバイスの初期化
-  delay(300);
+void setup() {//setup関数は最初に1回だけ実行される関数。void型であることには注意。voidの説明は後にします。
+  pinMode(ledPin, OUTPUT); //ピンのモードを出力に設定
 }
 
-void loop() {
-  accelgyro.getMotion6(&amp;ax, &amp;ay, &amp;az, &amp;gx, &amp;gy, &amp;gz);
-  Serial.print(ax); Serial.print(", ");
-  Serial.print(ay); Serial.print(", ");
-  Serial.print(az); Serial.print(" : ");
-  Serial.print(gx); Serial.print(", ");
-  Serial.print(gy); Serial.print(", ");
-  Serial.print(gz); Serial.println("");
-  delay(100);
+void loop() {//繰り返し実行される関数
+  digitalWrite(ledPin, HIGH); //LEDを点灯
+  delay(1000); //1秒待つ
+  digitalWrite(ledPin, LOW); //LEDを消灯
+  delay(1000); //1秒待つ
 }</code></pre>
       </div>
 
       <div class="coding-block">
-        <h3>コード2の説明</h3>
+        <h3>変数、関数、制御文の変更</h3>
+        <p>基本構造を書けるようになったら、次は値の変更、関数の追加、条件分岐の利用を試します。少しずつ変更して、どの記述がどの動作に対応しているかを見ていくのが大事です。
+          ここら辺は、書いて真似て制御文の意味を考えていく、体裁的なことというより、慣れるセクションです。
+          以下のサンプルコードを真似して自らの手で書いて変化を見てください。
+          そして、そのコードをteamsで共有してください。
+          ここら辺からエラーが発生しやすくなります。気軽にセンパイに聞いてみてください。</p>
+        <p><strong>サンプルコード1</strong></p>
+        <pre><code>#include &lt;Arduino.h&gt; // ここにライブラリを追加
+
+const int ledPin = 8; //ピンの定義　GPIOで記述する場合はD8とする。これはケースバイケース
+
+void setup() {
+}
+
+void loop() {
+  for(int i = 0; i < 6; i++) { //漸かにLEDの明るさを変えるループ
+    analogWrite(ledPin, 50*i); //LEDを点灯
+    delay(500); //500ミリ秒待つ
+  }
+}</code></pre>
+        <p><strong>サンプルコード2</strong></p>
+        <p>関数を分けて、点滅と明るさの変化を切り替えて動かすサンプルコードです。関数の作り方、使い方はあとで説明します。</p>
+        <pre><code>#include &lt;Arduino.h&gt;//ここにライブラリを追加
+
+const int ledPin = 8; //ピンの定義　GPIOで記述する場合はD8とする。これはケースバイケース
+
+void blink(){
+  analogWrite(ledPin, 255); //LEDを点灯
+  delay(1000); //1000ミリ秒待つ
+  analogWrite(ledPin, 0); //LEDを消灯
+  delay(1000); //1000ミリ秒待つ
+}
+
+void illumination(){
+  for (int i =0; i &lt; 10; i++){
+    analogWrite(ledPin, i*25); //LEDの明るさを変える
+    delay(100); //100ミリ秒待つ
+  }
+  for (int i =9; i &gt;= 0; i--){
+    analogWrite(ledPin, i*25); //LEDの明るさを変える
+    delay(100); //100ミリ秒待つ
+  }
+}
+
+void setup() {
+  //私はここにpinMode(ledPin, OUTPUT); //LEDピンを出力に設定するコードを入れたところ光りませんでした。
+  //pinModeを設定後にanalog出力にしたため、digitalWriteで点灯させることができませんでした。
+  blink(); //点滅関数を呼び出す
+  illumination(); //明るさ変化関数を呼び出す
+}
+
+void loop() {//関数を使って記述した場合。同じような処理の場合、関数を使うことでloop文の中を減らせる
+  blink();
+  illumination();
+  blink();
+  blink();
+  illumination();
+}</code></pre>
+        <p><strong>サンプルコード3</strong></p>
         <p>ここに2つ目のコードについての説明を書いてください。</p>
         <pre><code>// ここに2つ目のコードを書いてください
 void setup() {
@@ -1366,10 +1518,6 @@ void setup() {
 
 void loop() {
 }</code></pre>
-      </div>
-
-      <div class="coding-block">
-        <h3>コード3の説明</h3>
         <p>ここに3つ目のコードについての説明を書いてください。</p>
         <pre><code>// ここに3つ目のコードを書いてください
 void setup() {
@@ -1378,28 +1526,50 @@ void setup() {
         void loop() {
 }</code></pre>
       </div>
+
+      <div class="coding-block">
+        <h3>シリアル通信</h3>
+        <p>次はシリアル通信です。シリアル通信を使うと、マイコンの中で何が起きているかをパソコン側へ文字として送れます。センサの値を確認したり、どこまで処理が進んだかを調べたりするときにとても便利です。最初のうちは LED の点滅だけでなく、<code>Serial.print()</code> や <code>Serial.println()</code> を使って状態を表示する練習をしておくと、デバッグがかなりやりやすくなります。</p>
+        <p><strong>サンプルコード</strong></p>
+        <pre><code>#include &lt;Arduino.h&gt;
+
+int count = 0;
+
+void setup() {
+  Serial.begin(115200); // シリアル通信を開始
+  delay(500); // モニタ接続を少し待つ
+  Serial.println("Serial monitor start");
+}
+
+void loop() {
+  Serial.print("count = ");
+  Serial.println(count);
+  count++;
+  delay(1000);
+}</code></pre>
+        <p>このコードでは、1 秒ごとに <code>count</code> の値をシリアルモニタへ送っています。PlatformIO ならシリアルモニタを開いて確認でき、Arduino IDE でも同じように表示を見られます。まずは自分で数字や文字列を変えて、どのように出力が変わるかを試してみてください。</p>
+      </div>
+
+      <details class="coding-column">
+        <summary>コラム: 変数・関数の命名規則</summary>
+        <div class="coding-column-body">
+          <p>変数名や関数名は、何を表しているかがひと目で分かる名前にします。短すぎる名前よりも、役割が伝わる名前を優先してください。</p>
+          <p>このページでは、変数は <code>ledPin</code> や <code>motorSpeed</code> のような lowerCamelCase を基本にし、関数も <code>readSensor()</code> や <code>updateMotor()</code> のように動作が分かる名前をおすすめします。</p>
+          <p>一方で、<code>a</code> や <code>tmp</code> のような意味が伝わりにくい名前は、あとで読み返したときに困りやすいです。自分以外の人が見ても分かる名前を意識しておくと、修正もかなり楽になります。
+          前書きでも述べましたが、コーディングはチームで行う場合がほとんどです。おすすめの書として、オライリー社出版の「リーダブルコード」をおすすめします。</p>
+        </div>
+      </details>
     </section>
 
-    <section class="content-card" id="support">
-      <h2>サポートフォーム</h2>
-      <p>質問や相談を送るためのフォームです。講座登録番号を入力しないと質問できないようにしてあります。</p>
-
-      <form class="support-form" id="support-form">
-        <div class="form-row">
-          <label for="registration-number">講座登録番号</label>
-          <input id="registration-number" name="registration-number" type="text" placeholder="例: RSEC-2026-001" required>
-          <p class="form-note">講座登録番号の入力が必須です。未入力の場合は質問を送信できません。</p>
-        </div>
-
-        <div class="form-row">
-          <label for="support-question">質問内容</label>
-          <textarea id="support-question" name="support-question" placeholder="ここに質問内容を書いてください。" required></textarea>
-        </div>
-
-        <button class="support-submit" id="support-submit" type="submit" disabled>質問を送信</button>
-        <p class="support-status" id="support-status">講座登録番号を入力すると送信できるようになります。</p>
-      </form>
+    <section class="content-card" id="documents">
+      <h2>資料</h2>
+      <p>配布資料や補足資料の PDF をここで確認できます。PDF ファイルを同じフォルダに置いて使ってください。</p>
+      <div class="document-frame">
+        <embed src="what_is_function.pdf" type="application/pdf">
+      </div>
+      <a class="document-link" href="what_is_function.pdf" target="_blank" rel="noopener noreferrer">PDF を別タブで開く</a>
     </section>
+
   </div>
 
   <script>
@@ -1423,11 +1593,6 @@ void setup() {
     const environmentSelect = document.getElementById("environment-select");
     const environmentTitle = document.getElementById("environment-title");
     const environmentDescription = document.getElementById("environment-description");
-    const registrationNumberInput = document.getElementById("registration-number");
-    const supportForm = document.getElementById("support-form");
-    const supportSubmit = document.getElementById("support-submit");
-    const supportStatus = document.getElementById("support-status");
-
     const tireImages = {
       street: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 160'><rect width='240' height='160' rx='20' fill='%23f4f7f4'/><ellipse cx='120' cy='80' rx='72' ry='72' fill='%2323282b'/><ellipse cx='120' cy='80' rx='46' ry='46' fill='%236c767a'/><ellipse cx='120' cy='80' rx='20' ry='20' fill='%23d8dfdc'/><g stroke='%239ba5aa' stroke-width='4'><line x1='120' y1='40' x2='120' y2='120'/><line x1='80' y1='80' x2='160' y2='80'/><line x1='92' y1='52' x2='148' y2='108'/><line x1='148' y1='52' x2='92' y2='108'/></g><g stroke='%23454e52' stroke-width='5'><line x1='66' y1='38' x2='174' y2='122'/><line x1='58' y1='52' x2='166' y2='136'/><line x1='74' y1='24' x2='182' y2='108'/></g></svg>",
       block: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 160'><rect width='240' height='160' rx='20' fill='%23f4f7f4'/><ellipse cx='120' cy='80' rx='72' ry='72' fill='%2323282b'/><ellipse cx='120' cy='80' rx='44' ry='44' fill='%23626d72'/><ellipse cx='120' cy='80' rx='18' ry='18' fill='%23d8dfdc'/><g fill='%23464f53'><rect x='52' y='24' width='20' height='18' rx='4'/><rect x='86' y='12' width='20' height='18' rx='4'/><rect x='120' y='8' width='20' height='18' rx='4'/><rect x='154' y='12' width='20' height='18' rx='4'/><rect x='174' y='34' width='18' height='20' rx='4'/><rect x='182' y='68' width='18' height='20' rx='4'/><rect x='174' y='102' width='18' height='20' rx='4'/><rect x='154' y='124' width='20' height='18' rx='4'/><rect x='120' y='134' width='20' height='18' rx='4'/><rect x='86' y='124' width='20' height='18' rx='4'/><rect x='52' y='102' width='18' height='20' rx='4'/><rect x='40' y='68' width='18' height='20' rx='4'/><rect x='52' y='34' width='18' height='20' rx='4'/></g></svg>",
@@ -1461,15 +1626,15 @@ void setup() {
     const environmentOptions = {
       platformio: {
         title: "PlatformIO（推奨）",
-        description: "セットアップ説明文は未記入です。"
+        description: "C++ 開発の推奨環境です。ライブラリ管理や書き込み設定をまとめやすく、継続して開発しやすい構成です。"
       },
       arduino: {
         title: "Arduino IDE",
-        description: "セットアップ説明文は未記入です。"
+        description: "こちらも C++ で開発できます。まずは素早く書き込みを試したい場合に向いています。"
       },
       micropython: {
         title: "MicroPython",
-        description: "セットアップ説明文は未記入です。"
+        description: "MicroPython は選択できますが、このページの開発手順とサポート対象は C++ のみです。比較検討用の選択肢として残しています。"
       }
     };
 
@@ -1522,29 +1687,6 @@ void setup() {
     designSelect.addEventListener("change", updateDesignPreview);
     updateEnvironmentPreview();
     environmentSelect.addEventListener("change", updateEnvironmentPreview);
-
-    const updateSupportState = () => {
-      const hasRegistrationNumber = registrationNumberInput.value.trim().length > 0;
-      supportSubmit.disabled = !hasRegistrationNumber;
-      supportStatus.textContent = hasRegistrationNumber
-        ? "講座登録番号を確認できたので、質問を送信できます。"
-        : "講座登録番号を入力すると送信できるようになります。";
-    };
-
-    registrationNumberInput.addEventListener("input", updateSupportState);
-    updateSupportState();
-
-    supportForm.addEventListener("submit", (event) => {
-      event.preventDefault();
-
-      if (registrationNumberInput.value.trim().length === 0) {
-        supportStatus.textContent = "講座登録番号を入力してから質問を送信してください。";
-        registrationNumberInput.focus();
-        return;
-      }
-
-      supportStatus.textContent = "フォームの内容を確認しました。送信先はあとから設定できます。";
-    });
   </script>
 
 </body>
