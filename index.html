@@ -114,6 +114,71 @@
       color: rgba(247, 244, 238, 0.88);
     }
 
+    .hero-typing-overlay {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      background:
+        radial-gradient(circle at center, rgba(15, 27, 62, 0.42) 0%, rgba(4, 8, 22, 0.78) 42%, rgba(4, 8, 22, 0.96) 100%);
+      backdrop-filter: blur(8px);
+      z-index: 20;
+      opacity: 1;
+      visibility: visible;
+      transition: opacity 0.6s ease, visibility 0.6s ease;
+    }
+
+    .hero-typing-overlay.is-hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .hero-typing {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 96px;
+      max-width: min(92vw, 980px);
+      padding: 26px 34px;
+      border-radius: 24px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      background: rgba(6, 10, 26, 0.52);
+      color: #dff4ff;
+      font-size: clamp(28px, 5vw, 72px);
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      box-shadow:
+        inset 0 0 18px rgba(126, 216, 255, 0.08),
+        0 0 48px rgba(126, 216, 255, 0.14);
+      text-shadow: 0 0 20px rgba(126, 216, 255, 0.24);
+    }
+
+    .hero-typing-text {
+      white-space: nowrap;
+    }
+
+    .hero-typing-cursor {
+      display: inline-block;
+      width: 0.7ch;
+      margin-left: 6px;
+      color: #7ed8ff;
+      animation: heroCursorBlink 0.9s steps(1) infinite;
+    }
+
+    @keyframes heroCursorBlink {
+      0%,
+      45% {
+        opacity: 1;
+      }
+      46%,
+      100% {
+        opacity: 0;
+      }
+    }
+
     #materials {
       margin: 0;
       padding: 28px;
@@ -876,9 +941,354 @@
         border-bottom: none;
       }
     }
+
+    :root {
+      --space-bg-1: #040816;
+      --space-bg-2: #0a1330;
+      --space-bg-3: #12204b;
+      --space-panel: rgba(10, 18, 44, 0.84);
+      --space-panel-strong: rgba(15, 27, 62, 0.94);
+      --space-line: rgba(126, 216, 255, 0.2);
+      --space-line-strong: rgba(145, 196, 255, 0.42);
+      --space-text: #edf4ff;
+      --space-soft: #aebce0;
+      --space-accent: #7ed8ff;
+      --space-accent-2: #8d7cff;
+      --space-accent-3: #5effd5;
+      --space-warn: #ffbc7a;
+    }
+
+    body {
+      font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at 18% 14%, rgba(126, 216, 255, 0.18) 0%, transparent 18%),
+        radial-gradient(circle at 82% 20%, rgba(141, 124, 255, 0.16) 0%, transparent 22%),
+        radial-gradient(circle at 70% 76%, rgba(94, 255, 213, 0.1) 0%, transparent 20%),
+        linear-gradient(160deg, var(--space-bg-1) 0%, var(--space-bg-2) 52%, var(--space-bg-3) 100%);
+      color: var(--space-text);
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    body::before {
+      background-image:
+        radial-gradient(circle at 10% 18%, rgba(255, 255, 255, 0.9) 0 1px, transparent 1.5px),
+        radial-gradient(circle at 24% 64%, rgba(126, 216, 255, 0.95) 0 1px, transparent 1.6px),
+        radial-gradient(circle at 42% 30%, rgba(255, 255, 255, 0.75) 0 1px, transparent 1.5px),
+        radial-gradient(circle at 63% 52%, rgba(94, 255, 213, 0.7) 0 1px, transparent 1.6px),
+        radial-gradient(circle at 80% 24%, rgba(141, 124, 255, 0.92) 0 1px, transparent 1.7px),
+        radial-gradient(circle at 90% 74%, rgba(255, 255, 255, 0.72) 0 1px, transparent 1.6px);
+      opacity: 0.8;
+    }
+
+    body::after {
+      background:
+        linear-gradient(rgba(126, 216, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(126, 216, 255, 0.05) 1px, transparent 1px);
+      background-size: 32px 32px;
+      mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.4), transparent 88%);
+      opacity: 0.28;
+    }
+
+    .hero,
+    .content-card,
+    #materials,
+    .calendar-panel,
+    .schedule-card,
+    .mentor-card,
+    .design-preview,
+    .coding-block,
+    .coding-column,
+    .setup-panel,
+    .document-frame,
+    .teams-image-card {
+      background: linear-gradient(180deg, rgba(10, 18, 44, 0.9), rgba(8, 14, 34, 0.84));
+      border-color: var(--space-line);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.38);
+      color: var(--space-text);
+    }
+
+    .content-card,
+    #materials {
+      position: relative;
+    }
+
+    .content-card::before,
+    #materials::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      padding: 1px;
+      background: linear-gradient(135deg, rgba(126, 216, 255, 0.22), transparent 42%, rgba(141, 124, 255, 0.18));
+      -webkit-mask:
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+    }
+
+    .hero {
+      background: linear-gradient(145deg, rgba(6, 14, 38, 0.96), rgba(18, 34, 82, 0.88));
+      border-color: rgba(126, 216, 255, 0.2);
+    }
+
+    .hero::before {
+      background:
+        linear-gradient(135deg, rgba(3, 8, 22, 0.92), rgba(17, 34, 86, 0.52)),
+        url("minirover.jpg") center center / cover no-repeat;
+    }
+
+    .hero::after {
+      inset: auto -70px -70px auto;
+      width: 260px;
+      height: 260px;
+      background: radial-gradient(circle, rgba(126, 216, 255, 0.28) 0%, rgba(126, 216, 255, 0.06) 48%, transparent 72%);
+      filter: blur(4px);
+    }
+
+    .hero-kicker {
+      border-color: rgba(126, 216, 255, 0.34);
+      background: rgba(13, 26, 68, 0.52);
+      color: var(--space-accent);
+      letter-spacing: 0.14em;
+    }
+
+    .hero h1 {
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-shadow: 0 0 18px rgba(126, 216, 255, 0.18);
+    }
+
+    .hero p,
+    .overview-body p,
+    .coding-block p,
+    .coding-column-body p,
+    .setup-panel p,
+    .schedule-card p,
+    .design-preview p,
+    .mentor-card p,
+    .schedule-note,
+    .schedule-subnote,
+    .calendar-caption,
+    .microcontroller-note,
+    .part-role,
+    .tire-note,
+    .tire-caption,
+    p,
+    li {
+      color: var(--space-soft);
+    }
+
+    .language-link,
+    .section-link,
+    .document-link {
+      color: var(--space-text);
+      background: linear-gradient(135deg, rgba(17, 36, 91, 0.82), rgba(33, 70, 146, 0.42));
+      border-color: rgba(126, 216, 255, 0.25);
+      box-shadow: none;
+      transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .language-link:hover,
+    .section-link:hover,
+    .document-link:hover {
+      background: linear-gradient(135deg, rgba(27, 55, 132, 0.92), rgba(66, 118, 255, 0.48));
+      transform: translateY(-1px);
+      box-shadow: 0 10px 24px rgba(5, 15, 50, 0.32);
+    }
+
+    #materials h2,
+    .content-card h2,
+    .section-heading h2,
+    .calendar-header h3,
+    .schedule-list h3,
+    .schedule-card h4,
+    .mentor-card h3,
+    .design-preview h3,
+    .coding-block h3,
+    .setup-panel h3,
+    .design-selector label,
+    .form-row label,
+    .step-title,
+    .overview-toggle summary,
+    .coding-column summary {
+      color: var(--space-text);
+    }
+
+    .overview-toggle summary::after,
+    .coding-column summary::after,
+    .schedule-time,
+    .mentor-role,
+    .schedule-date,
+    #materials a,
+    a {
+      color: var(--space-accent);
+    }
+
+    .schedule-date,
+    .design-meta-item,
+    .calendar-weekday,
+    #materials th {
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .calendar-panel,
+    .schedule-card,
+    .mentor-card,
+    .design-preview,
+    .coding-block,
+    .coding-column,
+    .setup-panel,
+    .document-frame,
+    .teams-image-card {
+      background: rgba(14, 24, 58, 0.82);
+    }
+
+    .calendar-day {
+      border-color: rgba(126, 216, 255, 0.14);
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .calendar-day.muted {
+      background: rgba(255, 255, 255, 0.02);
+      color: #7080ad;
+    }
+
+    .calendar-day.event-day {
+      border-color: rgba(126, 216, 255, 0.46);
+      background: linear-gradient(180deg, rgba(19, 41, 100, 0.9) 0%, rgba(27, 66, 121, 0.82) 100%);
+      box-shadow: inset 0 0 0 1px rgba(126, 216, 255, 0.12), 0 0 20px rgba(126, 216, 255, 0.08);
+    }
+
+    .calendar-date {
+      color: var(--space-text);
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .event-day .calendar-date {
+      background: linear-gradient(135deg, var(--space-accent), var(--space-accent-2));
+      color: #071021;
+    }
+
+    .calendar-event {
+      color: var(--space-text);
+    }
+
+    .schedule-location {
+      color: var(--space-warn);
+    }
+
+    .design-selector select,
+    #materials select {
+      border-color: var(--space-line-strong);
+      background: rgba(8, 14, 36, 0.96);
+      color: var(--space-text);
+    }
+
+    .design-meta-label,
+    .mentor-affiliation,
+    .mentor-origin,
+    .teams-image-card figcaption {
+      color: var(--space-soft);
+    }
+
+    .coding-block pre {
+      background: linear-gradient(180deg, rgba(5, 10, 25, 0.98), rgba(10, 17, 39, 0.98));
+      color: #d6e6ff;
+      border: 1px solid rgba(126, 216, 255, 0.16);
+      box-shadow: inset 0 0 24px rgba(126, 216, 255, 0.04);
+    }
+
+    .coding-block code,
+    code {
+      color: #def1ff;
+    }
+
+    #materials table {
+      background: rgba(13, 22, 53, 0.88);
+    }
+
+    #materials th,
+    #materials td {
+      border-color: var(--space-line);
+      color: var(--space-text);
+    }
+
+    .optional-badge {
+      background: rgba(126, 216, 255, 0.14);
+      color: var(--space-accent);
+    }
+
+    .tire-preview,
+    .teams-image-card img,
+    .overview-video {
+      border-color: var(--space-line);
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .tire-preview {
+      background: linear-gradient(180deg, rgba(14, 24, 58, 0.95) 0%, rgba(10, 18, 44, 0.95) 100%);
+    }
+
+    .hero-typing-overlay {
+      background:
+        radial-gradient(circle at center, rgba(15, 27, 62, 0.42) 0%, rgba(4, 8, 22, 0.78) 42%, rgba(4, 8, 22, 0.96) 100%);
+    }
+
+    .hero-typing {
+      border-color: rgba(126, 216, 255, 0.2);
+      background: rgba(6, 10, 26, 0.52);
+      color: #dff4ff;
+      box-shadow:
+        inset 0 0 18px rgba(126, 216, 255, 0.08),
+        0 0 48px rgba(126, 216, 255, 0.14);
+    }
+
+    .hero-typing-cursor {
+      color: var(--space-accent);
+    }
+
+    @media (max-width: 720px) {
+      .hero-typing {
+        min-height: 78px;
+        padding: 20px 22px;
+        font-size: clamp(22px, 8vw, 42px);
+        letter-spacing: 0.08em;
+      }
+
+      .hero-typing-text {
+        white-space: normal;
+        text-align: center;
+      }
+
+      #materials tr {
+        border-color: var(--space-line);
+      }
+
+      #materials td {
+        border-bottom-color: var(--space-line);
+      }
+    }
   </style>
 </head>
 <body>
+  <div id="hero-typing-overlay" class="hero-typing-overlay" aria-live="polite">
+    <div class="hero-typing">
+      <span id="hero-typing-text" class="hero-typing-text"></span>
+      <span class="hero-typing-cursor" aria-hidden="true">|</span>
+    </div>
+  </div>
   <div class="page-shell">
     <header class="hero">
       <span class="hero-kicker">R-sec  new welcome Project</span>
@@ -1689,6 +2099,8 @@ void loop() {
   </div>
 
   <script>
+    const heroTypingOverlay = document.getElementById("hero-typing-overlay");
+    const heroTypingText = document.getElementById("hero-typing-text");
     const microcontrollerSelect = document.getElementById("microcontroller");
     const microcontrollerPrice = document.getElementById("microcontroller-price");
     const microcontrollerLink = document.getElementById("microcontroller-link");
@@ -1803,6 +2215,34 @@ void loop() {
     designSelect.addEventListener("change", updateDesignPreview);
     updateEnvironmentPreview();
     environmentSelect.addEventListener("change", updateEnvironmentPreview);
+
+    const startHeroTyping = () => {
+      if (!heroTypingText || !heroTypingOverlay) {
+        return;
+      }
+
+      const message = "welcome to R-sec...";
+      let index = 0;
+      heroTypingText.textContent = "";
+
+      const typeNextCharacter = () => {
+        heroTypingText.textContent = message.slice(0, index);
+        index += 1;
+
+        if (index <= message.length) {
+          const delay = index < message.length ? 90 : 220;
+          window.setTimeout(typeNextCharacter, delay);
+        } else {
+          window.setTimeout(() => {
+            heroTypingOverlay.classList.add("is-hidden");
+          }, 900);
+        }
+      };
+
+      window.setTimeout(typeNextCharacter, 250);
+    };
+
+    window.addEventListener("load", startHeroTyping, { once: true });
   </script>
 
 </body>
