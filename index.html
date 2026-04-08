@@ -1528,26 +1528,142 @@ void setup() {
       </div>
 
       <div class="coding-block">
-        <h3>シリアル通信</h3>
-        <p>次はシリアル通信です。シリアル通信を使うと、マイコンの中で何が起きているかをパソコン側へ文字として送れます。センサの値を確認したり、どこまで処理が進んだかを調べたりするときにとても便利です。最初のうちは LED の点滅だけでなく、<code>Serial.print()</code> や <code>Serial.println()</code> を使って状態を表示する練習をしておくと、デバッグがかなりやりやすくなります。</p>
+        <h3>i2c通信とOLEDのキャラクタデバイスについて</h3>
+        <p>続いてはシリアル通信の一つI2C(アイスクエアド通信）通信とOLEDのキャラクタデバイスについてです。I2Cの最大の特徴は、少ない本数の配線で複数のデバイスと通信できる点です。
+          SDA（データを送る線） と SCL（クロックを送る線） の 2 本を主に使います。
+          マスター（親）とスレーブ（子）の関係で通信を行い、マスターがスレーブに対してアドレスを指定して通信します。
+          これにより、複数のデバイスを同じ線でつなげることができます。
+          詳しくは、こちらを見てください。</p>
+        <a href="https://techweb.rohm.co.jp/product/micon/micons/23805/" target="_blank" rel="noopener noreferrer">I2C通信について詳しく知る</a>
+        <p>今回は、OLEDを用いて、I2C通信はどういったもので、どうコーディングするべきかを体験して頂きます。
+          そのため、多くのライブラリを用いますが、ライブラリの内容についてはあまり深く説明しません（説明しても意味ないから）。
+          とりあえず、コードを真似して動かしてみてください。
+        </p>
         <p><strong>サンプルコード</strong></p>
-        <pre><code>#include &lt;Arduino.h&gt;
+        <pre><code>#include <Arduino.h> //ここにライブラリを追加
+#include <Wire.h> //I2C通信ライブラリ
+#include <Adafruit_SSD1306.h> //OLEDディスプレイライブラリ
+#include <Adafruit_GFX.h> //グラフィックライブラリ
 
-int count = 0;
+#define SCREEN_WIDTH 128 // OLEDの表示幅, ピクセル単位
+#define SCREEN_HEIGHT 64 // OLEDの表示高さ, ピクセル単位
+#define OLED_RESET -1 // OLEDリセットピン（使用しない場合は-1）
+#define SCREEN_ADDRESS 0x3C // よく使われるSSD1306のI2Cアドレス
+
+Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 
 void setup() {
-  Serial.begin(115200); // シリアル通信を開始
-  delay(500); // モニタ接続を少し待つ
-  Serial.println("Serial monitor start");
+  Serial.begin(115200);//シリアル通信の初期化。通信速度は115200bpsに設定
+  Wire.begin();// I2C通信の初期化
+
+  if (!display.begin(SSD1306_SWITCHCAPVCC, SCREEN_ADDRESS)) {//3.3V電源を使用する場合はSSD1306_SWITCHCAPVCCを指定し、よく使われるI2Cアドレス0x3Cを指定してOLEDを初期化
+    while (true) {
+      Serial.println("OLED init failed");// OLEDの初期化に失敗した場合はシリアルモニタにエラーメッセージを表示
+      delay(100);
+    }
+  }// OLEDの初期化に失敗した場合はここで止まる
+
+  display.clearDisplay();// OLEDの画面をクリア　これがないと前の表示が残ることがある。　これはOLED側のマイコンのメモリに前の表示が残っているためで、OLEDを初期化した後は必ず画面をクリアすることが推奨される
+  display.setTextSize(1);// テキストサイズを1に設定（デフォルトは1）
+  display.setTextColor(SSD1306_WHITE);// テキストカラーを白に設定
+  display.setCursor(0, 0);// テキストの表示位置を左上に設定
+  display.println("welcome to R-sec");//ln()は改行を行う関数。これで文字列を表示した後に次の行に移る 次の文から改行が始まる
+  display.println("Hello, World!");// 文字列を表示
+  display.display();
 }
 
 void loop() {
-  Serial.print("count = ");
-  Serial.println(count);
-  count++;
   delay(1000);
+}
+</code></pre>
+        <p>次は、OLED上に任意の文字以外の要素を表示する方法についてです。
+          これは、以外にもシンプルであり、I2C通信にはあまり関係ないため、あまり深く説明しません。
+          これこそ、AIの出番です。「SSD1306にかわいい顔を表示するサンプルコードを書いて」等と
+          入力してみてください。
+        </p>
+      </div>
+
+      <div class="coding-block">
+        <h3>シリアル通信</h3>
+        <p>次はシリアル通信です。シリアル通信を使うと、マイコンの中で何が起きているかをパソコン側へ文字として送れます。
+          センサの値を確認したり、どこまで処理が進んだかを調べたりするときにとても便利です。
+          最初のうちは LED の点滅だけでなく、<code>Serial.print()</code> や <code>Serial.println()</code> を使って状態を表示する練習をしておくと、デバッグがかなりやりやすくなります。
+          デバックとは、プログラムの動作を追跡し、問題を特定するための手法です。思った動きをしないとき、どこが原因なのか発見するのに役立ちます。
+        実は、<code>void setup(){}</code>で<code>Serial.begin(speed)</code>と入力しその後<code>Serial.print(letter or number)</code>
+      と入力するだけです。これを使って今のエラーコードが出るコードを修正してください。これに関しては、コピペで行って構いません。</p>
+        <p><strong>サンプルコード</strong></p>
+        <pre><code>#include <Arduino.h>
+const int led = 8;
+int state = LOW;
+
+void setup() {
+  Serial.begin(9600);
+  pinMode(led, OUTPUT);
+}
+
+void loop() {
+  state == !state;
+
+  //Serial.println(state);
+
+  digitalWrite(led, state);
+  delay(500);
 }</code></pre>
-        <p>このコードでは、1 秒ごとに <code>count</code> の値をシリアルモニタへ送っています。PlatformIO ならシリアルモニタを開いて確認でき、Arduino IDE でも同じように表示を見られます。まずは自分で数字や文字列を変えて、どのように出力が変わるかを試してみてください。</p>
+        <details class="coding-column">
+          <summary>ヒントを見る</summary>
+          <div class="coding-column-body">
+            <p>このコードでは、<code>state</code> の値を切り替えたいのに、比較に使う記号を書いてしまっています。代入と比較の違いを見直してみてください。</p>
+            <p>もうひとつのポイントは、シリアルモニタに状態を表示する行です。コメントアウトを外すと、LED の状態がどう変わっているか追いやすくなります。</p>
+            <p><code>state</code> が本当に変化しているかを <code>Serial.println(state);</code> で確認しながら修正すると、原因を見つけやすいです。</p>
+            <p>  LOWとHIGHは0と1と同値です。</p>
+          </div>
+        </details>
+        <p>このコードでは、0.5秒ごとに <code>state</code> の値をシリアルモニタへ送っています。PlatformIO ならシリアルモニタを開いて確認でき、Arduino IDE でも同じように表示を見られます。
+          このコードだと、ledが光りません。問題はloop関数内にあります。</p>
+      </div>
+
+      <div class="coding-block">
+        <h3>モーターをPWM制御で動かす</h3>
+        <p>次は、モーターを PWM 制御で動かす練習です。PWM は、ON と OFF を高速で切り替えることで、モーターに加わる平均的な電力を調整する方法です。
+          これにより、ただ回すだけでなく、ゆっくり回したり速く回したりといった速度調整ができるようになります。
+          LED の明るさを変えるときに使った <code>analogWrite()</code> と似た考え方なので、まずは値を少しずつ変えながらモーターの動きを観察してみてください。</p>
+        <p>モータードライバを使う場合は、方向を決めるピンと、速さを決める PWM ピンを分けて扱うことが多いです。
+          ここではまず片方向だけ回すコードを扱います。最初から前進・後退の両方を入れるよりも、1つずつ確認した方がトラブルシューティングしやすいです。</p>
+        <p><strong>サンプルコード</strong></p>
+        <pre><code>#include &lt;Arduino.h&gt;
+
+const int motorDirPin = 7;
+const int motorPwmPin = 9;
+
+void setup() {
+  pinMode(motorDirPin, OUTPUT);
+  pinMode(motorPwmPin, OUTPUT);
+  Serial.begin(9600);
+}
+
+void loop() {
+  digitalWrite(motorDirPin, HIGH); // 回転方向を設定
+
+  for (int speedValue = 0; speedValue &lt;= 255; speedValue += 51) {
+    analogWrite(motorPwmPin, speedValue); // PWMで速度を変更
+    Serial.print("speed = ");
+    Serial.println(speedValue);
+    delay(1000);
+  }
+
+  analogWrite(motorPwmPin, 0); // モーターを停止
+  delay(1500);
+}</code></pre>
+        <p>このコードでは、PWM の値を少しずつ上げながらモーターの回転の強さを変えています。同時にシリアルモニタへ現在の値を表示しているので、
+          「どの値くらいから回り始めるか」「最大にするとどれくらい速くなるか」を確認しやすくなっています。</p>
+        <details class="coding-column">
+          <summary>ヒント: うまく回らないときは</summary>
+          <div class="coding-column-body">
+            <p>まず、PWM に使っているピンがそのマイコンで PWM 出力に対応しているか確認してください。ピンによっては <code>analogWrite()</code> が使えない場合があります。</p>
+            <p>次に、モータードライバの電源と GND が正しくつながっているかを見直してください。信号線だけ合っていても、電源まわりが不足していると回りません。</p>
+            <p>最後に、<code>analogWrite()</code> の値を小さくしすぎていないかも確認してみてください。モーターはある程度以上の値でないと回り始めないことがあります。</p>
+          </div>
+        </details>
       </div>
 
       <details class="coding-column">
