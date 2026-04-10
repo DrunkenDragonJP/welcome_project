@@ -6,6 +6,9 @@
   <title>R-sec project</title>
   <link rel="icon" href="r-sec_logo.jpg" type="image/jpeg">
   <link rel="apple-touch-icon" href="r-sec_logo.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hannari&display=swap" rel="stylesheet">
   <style>
     :root {
       --meat-cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cpath d='M20.6 4.9c-2.8.1-5.2 1.2-7.5 3.4-1.4 1.4-2.3 2.9-2.8 4.5-.7.2-1.5.7-2.1 1.3-1.6 1.6-1.6 4.2 0 5.7.6.6 1.4 1 2.2 1.2.6 1.5 1.6 2.9 3 4.1 2.7 2.3 5.7 3.2 9 2.6 4-.7 7.2-4.2 7.7-8.2.6-4.8-1.8-9.5-6.1-12-1-.6-2.3-1-3.4-1-.1-.6-.6-1.2-1.1-1.6-.8-.5-1.9-.5-2.7 0-.6.4-1 .9-1.1 1.6.4-.1.8-.1 1.2-.1 1.4 0 2.7.2 3.7.5z' fill='%23c24b4c'/%3E%3Cpath d='M23.3 8.3c-2.1-1.2-4.8-1.7-7.2-1.2-2.4.5-4.7 1.9-6.1 4-1.3 1.9-1.7 4.4-1 6.6.7 2.2 2.4 4.3 4.8 5.7 2.3 1.3 5.2 1.9 7.8 1.3 3.2-.8 5.7-3.8 6.1-7.1.5-3.8-1.4-7.5-4.4-9.3z' fill='%23e26d63'/%3E%3Cellipse cx='17.5' cy='15.6' rx='6.1' ry='4.8' fill='%23f3aa91'/%3E%3Cpath d='M6.3 14.8c-.7 0-1.4.3-1.8.8-1 1-1 2.6 0 3.6.5.5 1.1.8 1.8.8h2.2v-5.2H6.3z' fill='%23f2eee7'/%3E%3Ccircle cx='4.7' cy='16.6' r='1.8' fill='%23fffaf3'/%3E%3C/svg%3E") 4 4;
@@ -15,7 +18,7 @@
     body {
       margin: 0;
       padding: 32px;
-      font-family: "Segoe UI", sans-serif;
+      font-family: "Hannari", serif;
       background:
         radial-gradient(circle at top left, #f8d9a0 0%, transparent 28%),
         linear-gradient(135deg, #f4efe6 0%, #dfe8df 100%);
@@ -103,9 +106,38 @@
       background: rgba(255, 255, 255, 0.08);
     }
 
+    .hero-title-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .github-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      background: rgba(255, 255, 255, 0.08);
+      color: inherit;
+      font-size: 14px;
+      font-family: inherit;
+      text-decoration: none;
+      transition: background 0.18s, border-color 0.18s;
+      white-space: nowrap;
+    }
+    .github-btn:hover {
+      background: rgba(255, 255, 255, 0.16);
+      border-color: rgba(255, 255, 255, 0.4);
+    }
+    .github-btn svg {
+      flex-shrink: 0;
+    }
+
     .hero h1 {
       margin: 0;
-      font-size: clamp(34px, 5vw, 54px);
+      font-size: clamp(41px, 6vw, 65px);
       line-height: 1.08;
       letter-spacing: 0.03em;
     }
@@ -1213,7 +1245,7 @@
     }
 
     body {
-      font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+      font-family: "Hannari", serif;
       background:
         radial-gradient(circle at 18% 14%, rgba(126, 216, 255, 0.18) 0%, transparent 18%),
         radial-gradient(circle at 82% 20%, rgba(141, 124, 255, 0.16) 0%, transparent 22%),
@@ -1312,12 +1344,128 @@
       filter: blur(4px);
     }
 
+    /* セクションごとの色変化 */
+    #schedule.content-card {
+      background: linear-gradient(160deg, rgba(2, 14, 58, 0.96), rgba(6, 24, 52, 0.90));
+      border-color: transparent;
+      box-shadow: 0 0 0 1.5px rgba(126, 216, 255, 0.6), 0 0 32px rgba(126, 216, 255, 0.18), 0 24px 60px rgba(0,0,0,0.4);
+    }
+    #schedule.content-card::before {
+      background: linear-gradient(135deg, rgba(126, 216, 255, 0.55), transparent 50%, rgba(126, 216, 255, 0.25));
+    }
+    #preface.content-card {
+      background: linear-gradient(160deg, rgba(22, 6, 54, 0.96), rgba(16, 8, 44, 0.90));
+      border-color: transparent;
+      box-shadow: 0 0 0 1.5px rgba(196, 184, 255, 0.6), 0 0 32px rgba(196, 184, 255, 0.18), 0 24px 60px rgba(0,0,0,0.4);
+    }
+    #preface.content-card::before {
+      background: linear-gradient(135deg, rgba(196, 184, 255, 0.55), transparent 50%, rgba(141, 124, 255, 0.25));
+    }
+    #teams-guide.content-card {
+      background: linear-gradient(160deg, rgba(18, 4, 58, 0.96), rgba(14, 6, 48, 0.90));
+      border-color: transparent;
+      box-shadow: 0 0 0 1.5px rgba(141, 124, 255, 0.65), 0 0 32px rgba(141, 124, 255, 0.2), 0 24px 60px rgba(0,0,0,0.4);
+    }
+    #teams-guide.content-card::before {
+      background: linear-gradient(135deg, rgba(141, 124, 255, 0.55), transparent 50%, rgba(196, 184, 255, 0.25));
+    }
+    #mentors.content-card {
+      background: linear-gradient(160deg, rgba(2, 30, 42, 0.96), rgba(4, 22, 36, 0.90));
+      border-color: transparent;
+      box-shadow: 0 0 0 1.5px rgba(94, 255, 213, 0.55), 0 0 32px rgba(94, 255, 213, 0.18), 0 24px 60px rgba(0,0,0,0.4);
+    }
+    #mentors.content-card::before {
+      background: linear-gradient(135deg, rgba(94, 255, 213, 0.5), transparent 50%, rgba(94, 255, 213, 0.2));
+    }
+    #overview {
+      background: linear-gradient(160deg, rgba(36, 16, 6, 0.96), rgba(28, 12, 4, 0.90));
+      border-color: transparent;
+      box-shadow: 0 0 0 1.5px rgba(255, 188, 122, 0.6), 0 0 32px rgba(255, 188, 122, 0.18), 0 24px 60px rgba(0,0,0,0.4);
+    }
+    #overview::before {
+      background: linear-gradient(135deg, rgba(255, 188, 122, 0.5), transparent 50%, rgba(255, 160, 80, 0.22));
+    }
+    #materials {
+      background: linear-gradient(160deg, rgba(2, 28, 50, 0.96), rgba(4, 20, 40, 0.90));
+      border-color: transparent;
+      box-shadow: 0 0 0 1.5px rgba(94, 255, 213, 0.5), 0 0 32px rgba(94, 255, 213, 0.15), 0 24px 60px rgba(0,0,0,0.4);
+    }
+    #materials::before {
+      background: linear-gradient(135deg, rgba(94, 255, 213, 0.45), transparent 50%, rgba(126, 216, 255, 0.2));
+    }
+    #design.content-card {
+      background: linear-gradient(160deg, rgba(26, 4, 54, 0.96), rgba(20, 4, 44, 0.90));
+      border-color: transparent;
+      box-shadow: 0 0 0 1.5px rgba(184, 124, 255, 0.65), 0 0 32px rgba(184, 124, 255, 0.2), 0 24px 60px rgba(0,0,0,0.4);
+    }
+    #design.content-card::before {
+      background: linear-gradient(135deg, rgba(184, 124, 255, 0.55), transparent 50%, rgba(141, 124, 255, 0.25));
+    }
+    #assembly.content-card {
+      background: linear-gradient(160deg, rgba(2, 34, 36, 0.96), rgba(2, 26, 28, 0.90));
+      border-color: transparent;
+      box-shadow: 0 0 0 1.5px rgba(94, 255, 213, 0.6), 0 0 32px rgba(94, 255, 213, 0.2), 0 24px 60px rgba(0,0,0,0.4);
+    }
+    #assembly.content-card::before {
+      background: linear-gradient(135deg, rgba(94, 255, 213, 0.55), transparent 50%, rgba(94, 255, 213, 0.2));
+    }
+    #setup.content-card {
+      background: linear-gradient(160deg, rgba(2, 36, 28, 0.96), rgba(2, 28, 20, 0.90));
+      border-color: transparent;
+      box-shadow: 0 0 0 1.5px rgba(80, 255, 160, 0.6), 0 0 32px rgba(80, 255, 160, 0.18), 0 24px 60px rgba(0,0,0,0.4);
+    }
+    #setup.content-card::before {
+      background: linear-gradient(135deg, rgba(80, 255, 160, 0.5), transparent 50%, rgba(94, 255, 213, 0.2));
+    }
+    #coding.content-card {
+      background: linear-gradient(160deg, rgba(2, 8, 32, 0.98), rgba(4, 12, 28, 0.94));
+      border-color: transparent;
+      box-shadow: 0 0 0 1.5px rgba(126, 216, 255, 0.5), 0 0 32px rgba(126, 216, 255, 0.14), 0 24px 60px rgba(0,0,0,0.5);
+    }
+    #coding.content-card::before {
+      background: linear-gradient(135deg, rgba(126, 216, 255, 0.45), transparent 50%, rgba(94, 200, 255, 0.2));
+    }
+    #documents.content-card {
+      background: linear-gradient(160deg, rgba(20, 6, 50, 0.96), rgba(16, 4, 40, 0.90));
+      border-color: transparent;
+      box-shadow: 0 0 0 1.5px rgba(141, 124, 255, 0.6), 0 0 32px rgba(141, 124, 255, 0.18), 0 24px 60px rgba(0,0,0,0.4);
+    }
+    #documents.content-card::before {
+      background: linear-gradient(135deg, rgba(141, 124, 255, 0.5), transparent 50%, rgba(184, 124, 255, 0.22));
+    }
+
     .quick-nav a,
     .mobile-dock a {
       border-color: rgba(126, 216, 255, 0.18);
       background: linear-gradient(180deg, rgba(12, 24, 58, 0.88), rgba(9, 18, 44, 0.92));
       color: var(--space-text);
       box-shadow: 0 16px 32px rgba(0, 0, 0, 0.24);
+    }
+
+    /* ナビボタンをセクション色に合わせる */
+    .quick-nav a[href="#schedule"],
+    .mobile-dock a[href="#schedule"] {
+      background: linear-gradient(160deg, rgba(2, 14, 58, 0.96), rgba(6, 24, 52, 0.90));
+      border-color: transparent;
+      box-shadow: 0 0 0 1.5px rgba(126, 216, 255, 0.6), 0 0 18px rgba(126, 216, 255, 0.2), 0 16px 32px rgba(0,0,0,0.3);
+    }
+    .quick-nav a[href="#materials"],
+    .mobile-dock a[href="#materials"] {
+      background: linear-gradient(160deg, rgba(2, 28, 50, 0.96), rgba(4, 20, 40, 0.90));
+      border-color: transparent;
+      box-shadow: 0 0 0 1.5px rgba(94, 255, 213, 0.55), 0 0 18px rgba(94, 255, 213, 0.18), 0 16px 32px rgba(0,0,0,0.3);
+    }
+    .quick-nav a[href="#coding"],
+    .mobile-dock a[href="#coding"] {
+      background: linear-gradient(160deg, rgba(2, 8, 32, 0.98), rgba(4, 12, 28, 0.94));
+      border-color: transparent;
+      box-shadow: 0 0 0 1.5px rgba(126, 216, 255, 0.5), 0 0 18px rgba(126, 216, 255, 0.14), 0 16px 32px rgba(0,0,0,0.3);
+    }
+    .quick-nav a[href="#documents"],
+    .mobile-dock a[href="#documents"] {
+      background: linear-gradient(160deg, rgba(20, 6, 50, 0.96), rgba(16, 4, 40, 0.90));
+      border-color: transparent;
+      box-shadow: 0 0 0 1.5px rgba(141, 124, 255, 0.6), 0 0 18px rgba(141, 124, 255, 0.2), 0 16px 32px rgba(0,0,0,0.3);
     }
 
     .quick-nav a span {
@@ -1340,7 +1488,10 @@
     .hero h1 {
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      text-shadow: 0 0 18px rgba(126, 216, 255, 0.18);
+      color: #000;
+      font-weight: 900;
+      -webkit-text-stroke: 1px #fff;
+      text-shadow: none;
     }
 
     .hero p,
@@ -1522,6 +1673,120 @@
       color: var(--space-accent);
     }
 
+    /* 見積もり計算機 */
+    .cost-estimator {
+      margin-top: 28px;
+      padding: 24px 28px;
+      border-radius: 18px;
+      background: linear-gradient(160deg, rgba(2, 28, 50, 0.96), rgba(4, 20, 40, 0.90));
+      box-shadow: 0 0 0 1.5px rgba(94, 255, 213, 0.5), 0 0 24px rgba(94, 255, 213, 0.12), 0 16px 40px rgba(0,0,0,0.4);
+    }
+    .cost-estimator h3 {
+      margin: 0 0 18px;
+      font-size: 20px;
+      color: var(--space-accent-3);
+      letter-spacing: 0.04em;
+    }
+    .estimator-group {
+      margin-bottom: 20px;
+    }
+    .estimator-group-title {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: var(--space-soft);
+      text-transform: uppercase;
+      margin: 0 0 10px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid rgba(126, 216, 255, 0.12);
+    }
+    .estimator-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 7px 0;
+      border-bottom: 1px solid rgba(126, 216, 255, 0.07);
+      font-size: 14px;
+      color: var(--space-text);
+    }
+    .estimator-row:last-child { border-bottom: none; }
+    .estimator-row .est-name { flex: 1; }
+    .estimator-row .est-price {
+      min-width: 90px;
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+      color: var(--space-accent);
+    }
+    .estimator-row .est-price.unknown {
+      color: var(--space-soft);
+      font-size: 12px;
+    }
+    .estimator-row input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+      accent-color: var(--space-accent-3);
+      cursor: pointer;
+    }
+    .estimator-total-row {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-top: 18px;
+      padding-top: 14px;
+      border-top: 1.5px solid rgba(94, 255, 213, 0.3);
+    }
+    .estimator-total-label {
+      font-size: 15px;
+      color: var(--space-soft);
+    }
+    .estimator-total-value {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--space-accent-3);
+      letter-spacing: 0.02em;
+    }
+    .estimator-note {
+      margin: 10px 0 0;
+      font-size: 12px;
+      color: var(--space-soft);
+      line-height: 1.6;
+    }
+    .payment-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .payment-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 10px 14px;
+      border-radius: 10px;
+      background: rgba(126, 216, 255, 0.06);
+      border: 1px solid rgba(126, 216, 255, 0.12);
+    }
+    .payment-icon {
+      font-size: 20px;
+      flex-shrink: 0;
+      line-height: 1.4;
+    }
+    .payment-name {
+      display: block;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--space-text);
+    }
+    .payment-note {
+      display: block;
+      font-size: 12px;
+      color: var(--space-soft);
+      margin-top: 2px;
+    }
+
     .tire-preview,
     .teams-image-card img,
     .overview-video {
@@ -1587,7 +1852,15 @@
         <source src="pv圧縮.mp4" type="video/mp4">
       </video>
       <span class="hero-kicker">R-sec  new welcome Project</span>
-      <h1>電子工作編</h1>
+      <div class="hero-title-row">
+        <h1>電子工作編</h1>
+        <a class="github-btn" href="https://github.com/" target="_blank" rel="noopener noreferrer">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
+          </svg>
+          GitHub
+        </a>
+      </div>
       <p>make own tyny ROVER</p>
       <p>小型ローバーを自作しながら、電子工作と制御の基礎を楽しく体験するための講座です。</p>
       <div class="hero-device-row">
@@ -1921,13 +2194,13 @@
             <td>
               <label for="battery-select">バッテリー</label><br>
               <select id="battery-select" name="battery-select">
-                <option value="lithium" data-price="Amazonで確認" data-url="https://www.amazon.co.jp/s?k=%E3%83%AA%E3%83%81%E3%82%A6%E3%83%A0%E3%82%A4%E3%82%AA%E3%83%B3+%E3%83%90%E3%83%83%E3%83%86%E3%83%AA%E3%83%BC">リチウムイオンバッテリー</option>
-                <option value="9v" data-price="Amazonで確認" data-url="https://www.amazon.co.jp/s?k=9v+%E4%B9%BE%E9%9B%BB%E6%B1%A0">9V乾電池</option>
+                <option value="lithium" data-price="約¥1,500" data-url="https://www.amazon.co.jp/s?k=%E3%83%AA%E3%83%81%E3%82%A6%E3%83%A0%E3%82%A4%E3%82%AA%E3%83%B3+%E3%83%90%E3%83%83%E3%83%86%E3%83%AA%E3%83%BC">リチウムイオンバッテリー</option>
+                <option value="9v" data-price="¥110" data-url="https://www.amazon.co.jp/s?k=9v+%E4%B9%BE%E9%9B%BB%E6%B1%A0">9V乾電池（角電池）</option>
               </select>
               <p class="part-role">各パーツへ電力を供給する電源です。</p>
               <p class="microcontroller-note" id="battery-note">カメラを使う場合や高出力が必要な場合はリチウムイオンバッテリーを選んだ方がよいですが、高くなりやすいです。</p>
             </td>
-            <td id="battery-price">Amazonで確認</td>
+            <td id="battery-price">約¥1,500</td>
             <td><a id="battery-link" href="https://www.amazon.co.jp/s?k=%E3%83%AA%E3%83%81%E3%82%A6%E3%83%A0%E3%82%A4%E3%82%AA%E3%83%B3+%E3%83%90%E3%83%83%E3%83%86%E3%83%AA%E3%83%BC" target="_blank">商品ページを見る</a></td>
           </tr>
           <tr>
@@ -1943,7 +2216,7 @@
               降圧コンバーター
               <p class="part-role">バッテリー電圧を必要な電圧まで下げて安定供給します。</p>
             </td>
-            <td>Amazonで確認</td>
+            <td>¥200（¥998 / 5個入り）</td>
             <td><a href="https://www.amazon.co.jp/DROK-%E9%99%8D%E5%9C%A7%E3%82%B3%E3%83%B3%E3%83%90%E3%83%BC%E3%82%BF%E3%83%BC-%E3%83%9F%E3%83%8B%E9%9B%BB%E5%9C%A7%E3%83%AC%E3%82%AE%E3%83%A5%E3%83%AC%E3%83%BC%E3%82%BF%E3%83%BC%E3%83%9C%E3%83%BC%E3%83%89-%E5%9B%BA%E5%AE%9A%E3%81%A8%E8%AA%BF%E6%95%B4%E5%8F%AF%E8%83%BD%E5%87%BA%E5%8A%9B%E9%9B%BB%E5%9C%A7%E5%A4%89%E5%9C%A7%E5%99%A8-%E9%9B%BB%E6%BA%90%E3%82%B9%E3%82%BF%E3%83%93%E3%83%A9%E3%82%A4%E3%82%B6%E3%83%BC%E3%83%A2%E3%82%B8%E3%83%A5%E3%83%BC%E3%83%AB/dp/B0BB6RL227/ref=sr_1_8?__mk_ja_JP=%E3%82%AB%E3%82%BF%E3%82%AB%E3%83%8A&crid=12CP7LO6PXJKW&dib=eyJ2IjoiMSJ9._U8VhFnf6QBqcjN6N7YOvX4mHOso6OpF_MRO1bHyVEe4HAcup6uYme5HncT78vcsB27AVUgmp0N5F7SY-Laq9FNhwecwLxw1ee6PpY9IgFfAUkMdh58WElhlAgQfVO_HKqWS0hftgrBjHqrPUt1BbQrMZsK1WlxKxCIKuz4e91bqIPikZjWtl-e-hSsjSsAckOwbnmikeGjn2tkhpk9a7UbDszKIZHyLEtJHqDF6dt0U5oSZ0cG-1vrYSccdOXoBsxnLB1i_dH0YUlGUAjP5pZ9pIpmriW45gS4hXxxgp_g.EfdV6uO74gF5L-LqzYN_V059UjIrQDve90Qn5zb22rI&dib_tag=se&keywords=5V%2B%E3%82%B3%E3%83%B3%E3%83%90%E3%83%BC%E3%82%BF%E3%83%BC&qid=1774194060&s=electronics&sprefix=5v%2B%E3%82%B3%E3%83%B3%E3%83%90%E3%83%BC%E3%82%BF%E3%83%BC%2Celectronics%2C192&sr=1-8&ufe=app_do%3Aamzn1.fos.d8e7ee72-073f-4b97-8ec0-59c18d6dfebe&th=1" target="_blank">商品ページを見る</a></td>
           </tr>
           <tr>
@@ -1983,16 +2256,16 @@
               姿勢センサIMU <span class="optional-badge">オプション</span>
               <p class="part-role">車体の傾きや動きを検出したいときに追加できる任意のセンサです。</p>
             </td>
-            <td>Amazonで確認</td>
+            <td>約¥600</td>
             <td><a href="https://www.amazon.co.jp/ps61003-MPU-6050-%E4%BD%BF%E7%94%A8-%EF%BC%93%E8%BB%B8%E3%82%B8%E3%83%A3%E3%82%A4%E3%83%AD%E3%82%B9%E3%82%B3%E3%83%BC%E3%83%97%E3%83%BB%EF%BC%93%E8%BB%B8%E5%8A%A0%E9%80%9F%E5%BA%A6%E3%82%BB%E3%83%B3%E3%82%B5%E3%83%BC-%E3%83%A2%E3%82%B8%E3%83%A5%E3%83%BC%E3%83%AB/dp/B008BOPN40/ref=sr_1_6?dib=eyJ2IjoiMSJ9.42X7FTstpNcHweli9UHZt7PC1KgI2QqnX8DKxVGlw04_PFPZiNdZ19wXnwQjq5JfqoZ7Tkn2IUgl5R2WeG1Ig-OfFKtfS1sGsV21iE_-pZrEoogb25EeO9s3cq6TXiQzX6shrAKMdY9UfyiMzzUk3xCY1F_YQ7RZm2safo6d6KHD8jFq1f7S_743JbTFAtYtumcUVUCUNMobSvwjmqDXRdlpNBPZVPjMHBl7j4b7-ogzzdVjzZlpUYiYXTl6iHjp_aPkPmp-N_-Yj68N8sN-bTp6VzPn_vAL46HgotdoF08.jnXN91fDz8Im5RFf-tqaqUs8SK47sNe9CrBrO1na3AE&dib_tag=se&keywords=MPU9250&qid=1774196724&sr=8-6&ufe=app_do%3Aamzn1.fos.d8e7ee72-073f-4b97-8ec0-59c18d6dfebe" target="_blank">商品ページを見る</a></td>
           </tr>
           <tr>
             <td>
-              AHT20 + BMP280 温湿度・気圧センサーモジュール <span class="optional-badge">オプション</span>
-              <p class="part-role">周囲の温度・湿度・気圧を計測したいときに追加できる任意のセンサです。</p>
+              GY-BMP280-3.3 気圧・温湿度センサーモジュール
+              <p class="part-role">周囲の気圧・温度・湿度を計測します。</p>
             </td>
-            <td>Amazonで確認</td>
-            <td><a href="https://www.amazon.co.jp/Youmile-5%E5%80%8B%E6%B8%A9%E5%BA%A6%E6%B9%BF%E5%BA%A6%E3%82%BB%E3%83%B3%E3%82%B5%E3%83%BC%E3%83%A2%E3%82%B8%E3%83%A5%E3%83%BC%E3%83%AB%E5%A4%A7%E6%B0%97%E5%9C%A7%E3%83%A2%E3%82%B8%E3%83%A5%E3%83%BC%E3%83%ABAHT20-BMP280-1%E3%82%BB%E3%83%B3%E3%82%B5%E3%83%BCBME280%E3%81%A8%E4%BA%A4%E6%8F%9B%E9%9B%8C%E9%9B%84%E3%83%87%E3%83%A5%E3%83%9D%E3%83%B3%E3%82%B1%E3%83%BC%E3%83%96%E3%83%AB%E4%BB%98%E3%81%8Dfor-Arduino%E7%94%A8/dp/B0D2WVHPDN/ref=pd_ci_mcx_mh_mcx_views_0_image?pd_rd_w=IEcdt&content-id=amzn1.sym.308c03cc-4571-454b-b6e1-051d8b645bdf%3Aamzn1.symc.c946cdfb-3c15-48da-90e6-e9b2cb1b2953&pf_rd_p=308c03cc-4571-454b-b6e1-051d8b645bdf&pf_rd_r=2ACXSAR1QJZZMS35G8KB&pd_rd_wg=GcA2S&pd_rd_r=f86ea908-10bf-449a-975c-733c742f3975&pd_rd_i=B0D2WVHPDN" target="_blank">商品ページを見る</a></td>
+            <td>¥143（¥859 / 6個入り）</td>
+            <td><a href="https://www.amazon.co.jp/ADOFUN-%E3%80%906%E5%80%8B%E3%82%BB%E3%83%83%E3%83%88%E3%80%91GY-BMP280-3-3%E9%AB%98%E7%B2%BE%E5%BA%A6%E6%B0%97%E5%9C%A7%E3%82%BB%E3%83%B3%E3%82%B5%E3%83%BC%E3%83%A2%E3%82%B8%E3%83%A5%E3%83%BC%E3%83%AB-%E6%B8%A9%E6%B9%BF%E5%BA%A6%E3%82%BB%E3%83%B3%E3%82%B5%E3%83%A2%E3%82%B8%E3%83%A5%E3%83%BC%E3%83%AB-%E3%83%87%E3%82%B8%E3%82%BF%E3%83%AB%E5%87%BA%E5%8A%9BI2C%E3%82%A4%E3%83%B3%E3%82%BF%E3%83%BC%E3%83%95%E3%82%A7%E3%82%A4%E3%82%B9/dp/B0D1QVVZHD/ref=pd_ci_mcx_mh_mcx_views_0_image?pd_rd_w=fJk5I&content-id=amzn1.sym.308c03cc-4571-454b-b6e1-051d8b645bdf%3Aamzn1.symc.c946cdfb-3c15-48da-90e6-e9b2cb1b2953&pf_rd_p=308c03cc-4571-454b-b6e1-051d8b645bdf&pf_rd_r=MM27SZSK7PX5W20SGTJ8&pd_rd_wg=ACMnU&pd_rd_r=b692b125-2fb7-47f0-8228-e69fffcb80f6&pd_rd_i=B0D1QVVZHD" target="_blank">商品ページを見る</a></td>
           </tr>
           <tr>
             <td>
@@ -2007,7 +2280,7 @@
               AliExpress オプション部品 <span class="optional-badge">オプション</span>
               <p class="part-role">tofカメラです。各ピクセルごとの深度を測定できます。</p>
             </td>
-            <td>AliExpressで確認</td>
+            <td>約¥1,500</td>
             <td><a href="https://ja.aliexpress.com/item/1005009970383495.html?spm=a2g0o.order_list.order_list_main.5.21ef585aQAKUXM&gatewayAdapt=glo2jpn" target="_blank">商品ページを見る</a></td>
           </tr>
           <tr>
@@ -2034,24 +2307,24 @@
               OLEDディスプレイ
               <p class="part-role">状態表示や簡単な情報表示を行う小型画面です。</p>
             </td>
-            <td>Amazonで確認</td>
+            <td>¥373（¥745 / 2個入り）</td>
             <td><a href="https://www.amazon.co.jp/YUWENW-OLED%E3%83%87%E3%82%A3%E3%82%B9%E3%83%97%E3%83%AC%E3%82%A4-0-96%E3%82%A4%E3%83%B3%E3%83%81-OLED%E3%83%A2%E3%82%B8%E3%83%A5%E3%83%BC%E3%83%AB-Arduino%E3%81%AB%E5%AF%BE%E5%BF%9C/dp/B0DJ7B8P48/ref=sr_1_1_sspa?dib=eyJ2IjoiMSJ9.taiBTPMkoK_7pzI4tSJyJ8wP3B-z_flQb8XOSY4jcDx0W_85qolIxUkjR6ZaLgCWoY1ZtcwBGP5UZ7Wdaq-3q5vS3CwUUdxnrW7B9j881VIJqU1L1tUR4QSxICYDFjKxBIX8of5f__pHCMMGV48VyN9Z2V9UdHicn9i1_iCy6MEeBd2ZXyBxEyZ2yTHevjnNLTmugUQvxdAIlHkrwGwIQte3w6rxtJ7HQzzRlgYu56RuluP07VHs-2LS6HvJKGFXrKsURUOtiqFXTzTiB-wCEGQI2f89uHMIBqiGcx_o9TE.jibN0opIddprUIzjujLC0W5rNTNKnsfkjYgTXEVtScI&dib_tag=se&keywords=OLED&qid=1774194203&sr=8-1-spons&ufe=app_do%3Aamzn1.fos.d8e7ee72-073f-4b97-8ec0-59c18d6dfebe&sp_csd=d2lkZ2V0TmFtZT1zcF9hdGY&th=1" target="_blank">商品ページを見る</a></td>
           </tr>
           <tr>
             <td>
-              コネクター用ハウジング 4P
-              <p class="part-role">OLEDとの接続に使う4ピンのハウジングです。</p>
+              コネクター用ハウジング 4P × 2
+              <p class="part-role">OLEDとの接続に使う4ピンのハウジングです。2個必要です。</p>
             </td>
-            <td>¥10</td>
+            <td>¥10 × 2</td>
             <td><a href="https://akizukidenshi.com/catalog/g/g112153/" target="_blank">商品ページを見る</a></td>
           </tr>
           <tr>
             <td>
-              基板用スライドスイッチ SS-12D00-G5
+              基板用スライドスイッチ
               <p class="part-role">メイン電源のオンオフ切り替えに使う基板取付用の小型スイッチです。</p>
             </td>
-            <td>¥20</td>
-            <td><a href="https://akizukidenshi.com/catalog/g/g108790/" target="_blank">商品ページを見る</a></td>
+            <td>¥40</td>
+            <td><a href="https://akizukidenshi.com/catalog/g/g115371/" target="_blank">商品ページを見る</a></td>
           </tr>
           <tr>
             <td>
@@ -2077,8 +2350,164 @@
             <td>別途準備</td>
             <td>リンクなし</td>
           </tr>
+          <tr>
+            <td>
+              基板
+              <p class="part-role">各パーツを実装・配線するためのプリント基板です。</p>
+            </td>
+            <td>¥124</td>
+            <td>リンクなし</td>
+          </tr>
+          <tr>
+            <td>
+              フィラメント・ねじ類
+              <p class="part-role">3Dプリント用フィラメントおよび組み立てに使うねじ類の費用です。</p>
+            </td>
+            <td>¥300（目安）</td>
+            <td>リンクなし</td>
+          </tr>
         </tbody>
       </table>
+
+      <!-- 見積もり計算機 -->
+      <div class="cost-estimator">
+        <h3>お見積もり計算機</h3>
+
+        <div class="estimator-group">
+          <p class="estimator-group-title">必須パーツ（価格確定分）</p>
+          <div class="estimator-row">
+            <span class="est-name">マイコン（<span id="est-mc-name">Seeed Studio XIAO ESP32C3</span>）</span>
+            <span class="est-price" id="est-mc-price">¥1,080</span>
+          </div>
+          <div class="estimator-row">
+            <span class="est-name">バッテリー（<span id="est-battery-name">リチウムイオンバッテリー</span>）</span>
+            <span class="est-price" id="est-battery-price">約¥1,500</span>
+          </div>
+          <div class="estimator-row">
+            <span class="est-name">XT30コネクター</span>
+            <span class="est-price">¥70</span>
+          </div>
+          <div class="estimator-row">
+            <span class="est-name">FEETECH ギアードモーター FM90 × 2</span>
+            <span class="est-price">¥660</span>
+          </div>
+          <div class="estimator-row">
+            <span class="est-name">XHコネクター × 2</span>
+            <span class="est-price">¥30</span>
+          </div>
+          <div class="estimator-row">
+            <span class="est-name">TB6612 モータードライバー</span>
+            <span class="est-price">¥380</span>
+          </div>
+          <div class="estimator-row">
+            <span class="est-name">コネクター用ハウジング 4P × 2</span>
+            <span class="est-price">¥20</span>
+          </div>
+          <div class="estimator-row">
+            <span class="est-name">基板用スライドスイッチ</span>
+            <span class="est-price">¥40</span>
+          </div>
+          <div class="estimator-row">
+            <span class="est-name">汎用整流用ダイオード 1N4007</span>
+            <span class="est-price">¥100</span>
+          </div>
+          <div class="estimator-row">
+            <span class="est-name">3mm砲弾型LED</span>
+            <span class="est-price">¥10</span>
+          </div>
+          <div class="estimator-row">
+            <span class="est-name">降圧コンバーター（¥998/5個入り）</span>
+            <span class="est-price">¥200</span>
+          </div>
+          <div class="estimator-row">
+            <span class="est-name">OLEDディスプレイ（¥745/2個入り）</span>
+            <span class="est-price">¥373</span>
+          </div>
+          <div class="estimator-row">
+            <span class="est-name">GY-BMP280-3.3 気圧・温湿度センサー（¥859/6個入り）</span>
+            <span class="est-price">¥143</span>
+          </div>
+          <div class="estimator-row">
+            <span class="est-name">基板</span>
+            <span class="est-price">¥124</span>
+          </div>
+        </div>
+
+        <div class="estimator-group">
+          <p class="estimator-group-title">必須パーツ（要別途確認）</p>
+          <div class="estimator-row">
+            <span class="est-name">タイヤ</span>
+            <span class="est-price unknown">選定中</span>
+          </div>
+          <div class="estimator-row">
+            <span class="est-name">抵抗 約200Ω</span>
+            <span class="est-price unknown">別途準備</span>
+          </div>
+        </div>
+
+        <div class="estimator-group">
+          <p class="estimator-group-title">その他費用</p>
+          <div class="estimator-row">
+            <span class="est-name">フィラメント・ねじ類（目安）</span>
+            <span class="est-price">¥300</span>
+          </div>
+        </div>
+
+        <div class="estimator-group">
+          <p class="estimator-group-title">オプションパーツ（チェックで合計に加算）</p>
+          <label class="estimator-row">
+            <input type="checkbox" class="opt-check" data-price="20">
+            <span class="est-name">積層セラミックコンデンサー 1μF</span>
+            <span class="est-price">¥20</span>
+          </label>
+          <label class="estimator-row">
+            <input type="checkbox" class="opt-check" data-price="550">
+            <span class="est-name">シャープ測距モジュール GP2Y0A21YK</span>
+            <span class="est-price">¥550</span>
+          </label>
+          <label class="estimator-row">
+            <input type="checkbox" class="opt-check" data-price="600">
+            <span class="est-name">姿勢センサ IMU (MPU-6050)</span>
+            <span class="est-price">約¥600</span>
+          </label>
+          <label class="estimator-row">
+            <input type="checkbox" class="opt-check" data-price="1500">
+            <span class="est-name">tofカメラ (AliExpress)</span>
+            <span class="est-price">約¥1,500</span>
+          </label>
+        </div>
+
+        <div class="estimator-total-row">
+          <span class="estimator-total-label">合計（目安）（前後します）</span>
+          <span class="estimator-total-value" id="est-total">¥2,360</span>
+        </div>
+        <p class="estimator-note">※ 「要別途確認」のパーツと価格未定のオプションは含まれていません。<br>マイコン・バッテリーの選択変更・オプションのチェックで自動更新されます。</p>
+
+        <p class="estimator-group-title" style="margin-top:22px;">支払い方法</p>
+        <ul class="payment-list">
+          <li>
+            <span class="payment-icon">🏦</span>
+            <div>
+              <span class="payment-name">銀行振込</span>
+              <span class="payment-note">口座番号は担当者から連絡します。</span>
+            </div>
+          </li>
+          <li>
+            <span class="payment-icon">💴</span>
+            <div>
+              <span class="payment-name">現金手渡し</span>
+              <span class="payment-note">活動日に担当者へ直接お渡しください。</span>
+            </div>
+          </li>
+          <li>
+            <span class="payment-icon">📱</span>
+            <div>
+              <span class="payment-name">PayPay 個人送金</span>
+              <span class="payment-note">ポイント払い不可・送金先は担当者から連絡します。</span>
+            </div>
+          </li>
+        </ul>
+      </div>
     </section>
 
     <section class="content-card" id="design">
@@ -2118,21 +2547,7 @@
 
     <section class="content-card" id="assembly">
       <h2>組み立て方</h2>
-      <p>このセクションはあとから自由に編集できます。各手順の説明文を書き換えて使ってください。</p>
-      <ol class="steps-list">
-        <li>
-          <span class="step-title">手順1</span>
-          ここに手順1の説明を書いてください。
-        </li>
-        <li>
-          <span class="step-title">手順2</span>
-          ここに手順2の説明を書いてください。
-        </li>
-        <li>
-          <span class="step-title">手順3</span>
-          ここに手順3の説明を書いてください。
-        </li>
-      </ol>
+      <p>調整中</p>
     </section>
 
     <section class="content-card" id="setup">
@@ -2443,6 +2858,7 @@ void loop() {
             <p>まず、PWM に使っているピンがそのマイコンで PWM 出力に対応しているか確認してください。ピンによっては <code>analogWrite()</code> が使えない場合があります。</p>
             <p>次に、モータードライバの電源と GND が正しくつながっているかを見直してください。信号線だけ合っていても、電源まわりが不足していると回りません。</p>
             <p>最後に、<code>analogWrite()</code> の値を小さくしすぎていないかも確認してみてください。モーターはある程度以上の値でないと回り始めないことがあります。</p>
+            <p>xiaoではなぜか PWM 出力にするためにはピンをGPIO指定する必要があるようです。</p>
           </div>
         </details>
       </div>
@@ -2488,7 +2904,30 @@ void loop() {
     <a href="#documents">資料</a>
   </nav>
 
+  <audio id="page-bgm" src="bgm.mp3" preload="auto" loop></audio>
+
+  <button id="bgm-btn" title="BGM toggle" aria-label="BGM toggle" style="
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 9999;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 2px solid rgba(31,61,48,0.35);
+    background: rgba(31,61,48,0.82);
+    color: #f7f4ee;
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+    transition: opacity 0.2s;
+  ">🔊</button>
+
   <script>
+    const pageBgm = document.getElementById("page-bgm");
     const heroTypingOverlay = document.getElementById("hero-typing-overlay");
     const heroTypingText = document.getElementById("hero-typing-text");
     const microcontrollerSelect = document.getElementById("microcontroller");
@@ -2561,11 +3000,39 @@ void loop() {
       "9v": "9V乾電池は出力が小さいです。"
     };
 
+    // 見積もり計算機
+    const FIXED_REQUIRED = 70 + 660 + 30 + 380 + 20 + 40 + 100 + 10 + 200 + 373 + 143 + 300 + 124; // 2450
+    const MC_PRICES = { "xiao-esp32c3": 1080, "xiao-esp32s3": 1480, "xiao-esp32s3-sense": 2660 };
+    const BATTERY_PRICES = { "lithium": 1500, "9v": 110 };
+    const estMcName = document.getElementById("est-mc-name");
+    const estMcPrice = document.getElementById("est-mc-price");
+    const estBatteryName = document.getElementById("est-battery-name");
+    const estBatteryPrice = document.getElementById("est-battery-price");
+    const estTotal = document.getElementById("est-total");
+    const optChecks = document.querySelectorAll(".opt-check");
+
+    const updateEstimator = () => {
+      const mcPrice = MC_PRICES[microcontrollerSelect.value] ?? 1080;
+      estMcName.textContent = microcontrollerSelect.options[microcontrollerSelect.selectedIndex].text;
+      estMcPrice.textContent = "¥" + mcPrice.toLocaleString();
+      const batteryPrice = BATTERY_PRICES[batterySelect.value] ?? 1500;
+      estBatteryName.textContent = batterySelect.options[batterySelect.selectedIndex].text;
+      estBatteryPrice.textContent = (batterySelect.value === "lithium" ? "約" : "") + "¥" + batteryPrice.toLocaleString();
+      let optTotal = 0;
+      optChecks.forEach(cb => { if (cb.checked) optTotal += Number(cb.dataset.price); });
+      const total = FIXED_REQUIRED + mcPrice + batteryPrice + optTotal;
+      estTotal.textContent = "¥" + total.toLocaleString();
+    };
+
     microcontrollerSelect.addEventListener("change", () => {
       const selectedOption = microcontrollerSelect.options[microcontrollerSelect.selectedIndex];
       microcontrollerPrice.textContent = selectedOption.dataset.price;
       microcontrollerLink.href = selectedOption.dataset.url;
+      updateEstimator();
     });
+
+    optChecks.forEach(cb => cb.addEventListener("change", updateEstimator));
+    updateEstimator();
 
     const updateBatteryPreview = () => {
       const selectedOption = batterySelect.options[batterySelect.selectedIndex];
@@ -2600,7 +3067,7 @@ void loop() {
     updateTirePreview();
     tireSelect.addEventListener("change", updateTirePreview);
     updateBatteryPreview();
-    batterySelect.addEventListener("change", updateBatteryPreview);
+    batterySelect.addEventListener("change", () => { updateBatteryPreview(); updateEstimator(); });
     updateDesignPreview();
     designSelect.addEventListener("change", updateDesignPreview);
     updateEnvironmentPreview();
@@ -2632,7 +3099,43 @@ void loop() {
       window.setTimeout(typeNextCharacter, 250);
     };
 
+    const bgmBtn = document.getElementById("bgm-btn");
+    let bgmPlaying = false;
+
+    const setBgmState = (playing) => {
+      bgmPlaying = playing;
+      bgmBtn.textContent = playing ? "🔊" : "🔇";
+    };
+
+    const startPageBgm = () => {
+      if (!pageBgm) return;
+      pageBgm.play().then(() => {
+        setBgmState(true);
+      }).catch(() => {
+        // Autoplay blocked — wait for first user gesture
+        setBgmState(false);
+        const resumeOnGesture = () => {
+          pageBgm.play().then(() => setBgmState(true)).catch(() => {});
+          window.removeEventListener("pointerdown", resumeOnGesture);
+          window.removeEventListener("keydown", resumeOnGesture);
+        };
+        window.addEventListener("pointerdown", resumeOnGesture, { once: true });
+        window.addEventListener("keydown", resumeOnGesture, { once: true });
+      });
+    };
+
+    bgmBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      if (bgmPlaying) {
+        pageBgm.pause();
+        setBgmState(false);
+      } else {
+        pageBgm.play().then(() => setBgmState(true)).catch(() => {});
+      }
+    });
+
     window.addEventListener("load", startHeroTyping, { once: true });
+    window.addEventListener("load", startPageBgm, { once: true });
   </script>
 
 </body>
