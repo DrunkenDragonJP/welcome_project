@@ -949,6 +949,34 @@
       background: rgba(255, 255, 255, 0.82);
     }
 
+    .download-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 16px;
+      padding: 12px 22px;
+      border: 1px solid rgba(28, 106, 82, 0.3);
+      border-radius: 999px;
+      color: #fff;
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 700;
+      background: linear-gradient(135deg, #1f7a58, #2ea87a);
+      box-shadow: 0 4px 14px rgba(31, 122, 88, 0.28);
+      transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+    }
+
+    .download-btn::before {
+      content: "↓";
+      font-size: 17px;
+    }
+
+    .download-btn:hover {
+      background: linear-gradient(135deg, #176649, #25966c);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 22px rgba(31, 122, 88, 0.38);
+    }
+
     .mobile-dock {
       position: fixed;
       left: 14px;
@@ -1869,7 +1897,7 @@
       </div>
       <div class="hero-link-row">
         <a class="language-link" href="index_en.html">View English Page</a>
-        <a class="language-link" href="https://masmaro.github.io/rsec/" target="_blank" rel="noopener noreferrer">公式HPを見る</a>
+        <a class="language-link" href="https://r-sec-pr.github.io/rsec/#contact" target="_blank" rel="noopener noreferrer">公式HPを見る</a>
       </div>
     </header>
 
@@ -2863,6 +2891,180 @@ void loop() {
         </details>
       </div>
 
+      <div class="coding-block">
+        <h3>RCカーの作成</h3>
+        <p>最後のステップです。BLE通信を使ってRCカーを操作します。BLEとは Bluetooth Low Energy の略で、低消費電力で短距離の通信ができる技術です。
+          Wi-fiやBluettoth Classicと比べて、消費電力が少ないため、バッテリー駆動のデバイスでよく使われます。
+          ただ、BLEは常時通信をしないことで、省電力を実現しているため、通信のタイミングや方法が少し特殊です。
+          ここでは、BLE通信の基本的な流れと、RCカーの操作に必要なコードの例を紹介します。
+          このセクションは、実装を目的としますので、コードの深い理解は必要としません。
+          とりあえず、コードを真似して動かしてみてください。
+          尚、リモコンは、Pythonで書いています。pythonのＰＣへの導入方法は、資料を参照ください。
+        </p>
+        <p><strong>ESP32 (XIAO) 側サンプルコード</strong></p>
+        <pre><code>#include &lt;Arduino.h&gt;
+#include &lt;BLEDevice.h&gt;
+#include &lt;BLEServer.h&gt;
+#include &lt;BLEUtils.h&gt;
+#include &lt;BLE2902.h&gt;
+
+//必ずGPIO指定。何故かこうしないとクラッシュする
+const int motorR_Pin1 = D2;// GPIO2
+const int motorR_Pin2 = D1;// GPIO1
+const int motorL_Pin1 = D3;// GPIO3
+const int motorL_Pin2 = D10;// GPIO10
+const int motorR_PWM = D0;// GPIO0
+const int motorL_PWM = D6;// GPIO6
+
+// Nordic UART Service (NUS) UUID — controller.py と同じ
+#define SERVICE_UUID "6E400001-B5A3-F393-E0A9-E50E24DCCA9E"  // サービスUUID (NUS) 重複してはならないため要設定がいる
+#define RX_UUID      "6E400002-B5A3-F393-E0A9-E50E24DCCA9E"  // Python → ESP32
+#define TX_UUID      "6E400003-B5A3-F393-E0A9-E50E24DCCA9E"  // ESP32 → Python
+
+BLECharacteristic* pTxCharacteristic = nullptr;// BLE通知用グローバル変数
+
+// モーター制御
+int gSpeed = 153;       // 現在の速度 (0-255)、デフォルト153
+String gCmd  = "STOP";  // 現在実行中のコマンド
+
+// モーター制御関数。speedの正負で回転方向を制御し、絶対値で速度を制御します。
+void setMotor(int pin1, int pin2, int pwmPin, int speed) {
+  if (speed &gt; 0) {
+    digitalWrite(pin1, HIGH);
+    digitalWrite(pin2, LOW);
+  } else if (speed &lt; 0) {
+    digitalWrite(pin1, LOW);
+    digitalWrite(pin2, HIGH);
+  } else {
+    digitalWrite(pin1, LOW);
+    digitalWrite(pin2, LOW);
+  }
+  analogWrite(pwmPin, abs(speed));
+}
+
+// 左右のモーターを同時に制御する関数
+void driveMotors(int left, int right) {
+  setMotor(motorL_Pin1, motorL_Pin2, motorL_PWM, left);
+  setMotor(motorR_Pin1, motorR_Pin2, motorR_PWM, right);
+}
+
+// 現在の gCmd を gSpeed で再適用する（速度変更時に即時反映）
+void applyCmd() {
+  if      (gCmd == "FORWARD") driveMotors( gSpeed,  gSpeed);
+  else if (gCmd == "BACK")    driveMotors(-gSpeed, -gSpeed);
+  else if (gCmd == "LEFT")    driveMotors(-gSpeed,  gSpeed);
+  else if (gCmd == "RIGHT")   driveMotors( gSpeed, -gSpeed);
+  else                        driveMotors(0, 0);
+}
+
+// Python へ文字列を通知送信
+void sendNotify(const char* msg) {
+  if (pTxCharacteristic == nullptr) return;
+  pTxCharacteristic-&gt;setValue((uint8_t*)msg, strlen(msg));
+  pTxCharacteristic-&gt;notify();
+}
+
+// BLE書き込みコールバック (Python → ESP32)
+// コマンド例: "FORWARD", "BACK", "LEFT", "RIGHT", "STOP"
+class RxCallbacks : public BLECharacteristicCallbacks {
+  void onWrite(BLECharacteristic* pCharacteristic) override {
+    std::string raw = pCharacteristic-&gt;getValue();
+    if (raw.empty()) return;
+
+    // 末尾の改行・スペースを除去
+    while (!raw.empty() &amp;&amp; (raw.back() == '\n' || raw.back() == '\r' || raw.back() == ' ')) {
+      raw.pop_back();
+    }
+
+    String cmd = String(raw.c_str());
+    cmd.trim();
+    Serial.printf("BLE command: %s\n", cmd.c_str());
+
+    if (cmd == "FORWARD" || cmd == "BACK" || cmd == "LEFT" || cmd == "RIGHT") {
+      gCmd = cmd;
+      applyCmd();
+      sendNotify(("OK " + cmd).c_str());
+    } else if (cmd == "STOP") {
+      gCmd = "STOP";
+      driveMotors(0, 0);
+      sendNotify("OK STOP");
+    } else if (cmd.startsWith("SPEED:")) {
+      int pct = cmd.substring(6).toInt();           // 0-100 %
+      pct = constrain(pct, 0, 100);
+      gSpeed = (int)(pct * 255L / 100);             // map to 0-255 for analogWrite
+      applyCmd();                                   // 走行中なら即反映
+      sendNotify(("OK SPEED:" + String(pct)).c_str());
+    } else if (cmd == "STATUS") {
+      int pct = (int)(gSpeed * 100L / 255);
+      sendNotify(("STATUS cmd:" + gCmd + " speed:" + String(pct) + "%").c_str());
+    } else {
+      Serial.printf("Unknown command: %s\n", cmd.c_str());
+      sendNotify("ERR UNKNOWN");
+    }
+  }
+};
+
+class ServerCallbacks : public BLEServerCallbacks {
+  void onConnect(BLEServer* pServer) override {
+    Serial.println("BLE connected");
+  }
+  void onDisconnect(BLEServer* pServer) override {
+    Serial.println("BLE disconnected — restarting advertising");
+    driveMotors(0, 0);  // 切断時はモーター停止
+    BLEDevice::getAdvertising()-&gt;start();
+  }
+};
+
+void setup() {
+  pinMode(motorR_Pin1, OUTPUT);
+  pinMode(motorR_Pin2, OUTPUT);
+  pinMode(motorL_Pin1, OUTPUT);
+  pinMode(motorL_Pin2, OUTPUT);
+  pinMode(motorR_PWM, OUTPUT);
+  pinMode(motorL_PWM, OUTPUT);
+
+  driveMotors(0, 0);  // 起動時は停止
+
+  Serial.begin(115200);
+
+  // BLE初期化
+  BLEDevice::init("mini_RC_OLED");
+
+  BLEServer* pServer = BLEDevice::createServer();
+  pServer-&gt;setCallbacks(new ServerCallbacks());
+
+  BLEService* pService = pServer-&gt;createService(SERVICE_UUID);
+
+  // RX: Python → ESP32 (書き込み)
+  BLECharacteristic* pRxCharacteristic = pService-&gt;createCharacteristic(
+    RX_UUID,
+    BLECharacteristic::PROPERTY_WRITE
+  );
+  pRxCharacteristic-&gt;setCallbacks(new RxCallbacks());
+
+  // TX: ESP32 → Python (通知)
+  pTxCharacteristic = pService-&gt;createCharacteristic(
+    TX_UUID,
+    BLECharacteristic::PROPERTY_NOTIFY
+  );
+  pTxCharacteristic-&gt;addDescriptor(new BLE2902());
+
+  pService-&gt;start();
+
+  BLEAdvertising* pAdvertising = BLEDevice::getAdvertising();
+  pAdvertising-&gt;addServiceUUID(SERVICE_UUID);
+  pAdvertising-&gt;setScanResponse(true);
+  pAdvertising-&gt;start();
+
+  Serial.println("BLE started. Device: mini_RC_OLED");
+}
+
+void loop() {
+  delay(10);
+}</code></pre>
+        <a class="download-btn" href="controller.py" download="controller.py">コントローラー (controller.py) をダウンロード</a>
+      </div>
+
       <details class="coding-column">
         <summary>コラム: 変数・関数の命名規則</summary>
         <div class="coding-column-body">
@@ -2870,6 +3072,20 @@ void loop() {
           <p>このページでは、変数は <code>ledPin</code> や <code>motorSpeed</code> のような lowerCamelCase を基本にし、関数も <code>readSensor()</code> や <code>updateMotor()</code> のように動作が分かる名前をおすすめします。</p>
           <p>一方で、<code>a</code> や <code>tmp</code> のような意味が伝わりにくい名前は、あとで読み返したときに困りやすいです。自分以外の人が見ても分かる名前を意識しておくと、修正もかなり楽になります。
           前書きでも述べましたが、コーディングはチームで行う場合がほとんどです。おすすめの書として、オライリー社出版の「リーダブルコード」をおすすめします。</p>
+        </div>
+      </details>
+
+      <details class="coding-column">
+        <summary>コラム: ポインタ</summary>
+        <div class="coding-column-body">
+          <p>（内容は後で記述します）</p>
+        </div>
+      </details>
+
+      <details class="coding-column">
+        <summary>コラム: 文字列</summary>
+        <div class="coding-column-body">
+          <p>（内容は後で記述します）</p>
         </div>
       </details>
     </section>
