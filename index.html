@@ -3,7 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>R-sec project</title>
+  <title>R-sec 新歓2026 | 東京理科大学 宇宙工学エンジニアサークル</title>
+  <meta name="description" content="R-sec（東京理科大学宇宙工学エンジニアサークル）の新歓プロジェクト2026。小型ローバーを自作しながら電子工作・C++・BLE通信を体験。葛飾・野田キャンパスで開催。">
+  <meta name="keywords" content="R-sec, 新歓, 東京理科大学, 理科大, TUS, サークル, 宇宙工学, 電子工作, ロボット, ローバー, 新入生">
   <link rel="icon" href="r-sec_logo.jpg" type="image/jpeg">
   <link rel="apple-touch-icon" href="r-sec_logo.jpg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -2765,7 +2767,7 @@ void loop() {
           最初のうちは LED の点滅だけでなく、<code>Serial.print()</code> や <code>Serial.println()</code> を使って状態を表示する練習をしておくと、デバッグがかなりやりやすくなります。
           デバックとは、プログラムの動作を追跡し、問題を特定するための手法です。思った動きをしないとき、どこが原因なのか発見するのに役立ちます。
         実は、<code>void setup(){}</code>で<code>Serial.begin(speed)</code>と入力しその後<code>Serial.print(letter or number)</code>
-      と入力するだけです。これを使って今のエラーコードが出るコードを修正してください。これに関しては、コピペで行って構いません。</p>
+      と入力するだけです。これを使って今のエラーコードが出るコードを修正してください。これに関しては、コピペで行って構いません。シリアル通信については、資料を参照ください。</p>
         <p><strong>サンプルコード</strong></p>
         <pre><code>#include <Arduino.h>
 const int led = 8;
@@ -2802,7 +2804,7 @@ void loop() {
         <div class="motor-intro">
           <div class="motor-intro-copy">
             <p>次は、モーターを PWM 制御で動かす練習です。PWM は ON と OFF を高速で切り替えて、モーターに加わる平均的な電圧を調整する方法です。これにより、ただ回すだけでなく、ゆっくり回したり速く回したりといった速度調整ができます。</p>
-            <p>LED の明るさを変えるときに使った <code>analogWrite()</code> と考え方はかなり近いです。まずは値を少しずつ変えながら、どのくらいで回り始めるかを観察してみてください。</p>
+            <p>LED の明るさを変えるときに使った <code>analogWrite()</code> と考え方はかなり近いです。まずは値を少しずつ変えながら、どのくらいで回り始めるかを観察してみてください。詳しくは資料を参照してください。</p>
           </div>
           <div class="motor-formula-card">
             <h4>電圧のイメージ</h4>
@@ -3093,6 +3095,7 @@ void loop() {
     <section class="content-card" id="documents">
       <h2>資料</h2>
       <p>配布資料や補足資料の PDF をここで確認できます。</p>
+      <a class="download-btn" href="回路データ/回路全体.step" download="回路全体.step">基板データ（回路全体.step）をダウンロード</a>
       <div class="document-grid">
         <div class="document-card">
           <h3>関数の基本</h3>
@@ -3107,6 +3110,13 @@ void loop() {
             <embed src="Serial_and_PIO.pdf" type="application/pdf">
           </div>
           <a class="document-link" href="Serial_and_PIO.pdf" target="_blank" rel="noopener noreferrer">PDF を別タブで開く</a>
+        </div>
+        <div class="document-card">
+          <h3>Python 導入</h3>
+          <div class="document-frame">
+            <embed src="introduce_python.pdf" type="application/pdf">
+          </div>
+          <a class="document-link" href="introduce_python.pdf" target="_blank" rel="noopener noreferrer">PDF を別タブで開く</a>
         </div>
       </div>
     </section>
